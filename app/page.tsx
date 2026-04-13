@@ -14,7 +14,7 @@ export default function Home() {  const [scrolled, setScrolled] = useState(false
   return (
     <>
       <Head>
-        <title>MeshChat — Private P2P Messaging</title>
+        <title>HopChat — Private P2P Messaging</title>
         <meta
           name="description"
           content="Truly private messaging. No servers. No data collection. Just you and the people you trust."
@@ -34,7 +34,7 @@ export default function Home() {  const [scrolled, setScrolled] = useState(false
           <div className="nav__inner">
             <span className="nav__logo">
               <span className="nav__logo-icon">💬</span>
-              MeshChat
+              HopChat
             </span>
             <a
               href="#download"
@@ -60,7 +60,7 @@ export default function Home() {  const [scrolled, setScrolled] = useState(false
             <span className="hero__title-accent">No middleman.</span>
           </h1>
           <p className="hero__sub">
-            MeshChat connects you directly to the people you trust — device to
+            HopChat connects you directly to the people you trust — device to
             device, no servers in between. Built on Kademlia DHT and encrypted
             TCP connections.
           </p>
@@ -149,7 +149,7 @@ export default function Home() {  const [scrolled, setScrolled] = useState(false
                 {
                   emoji: "📡",
                   title: "Works offline-first",
-                  desc: "On the same WiFi, MeshChat works without any internet connection at all.",
+                  desc: "On the same WiFi, HopChat works without any internet connection at all.",
                 },
                 {
                   emoji: "⚡",
@@ -159,7 +159,7 @@ export default function Home() {  const [scrolled, setScrolled] = useState(false
                 {
                   emoji: "🫶",
                   title: "Open & free",
-                  desc: "No subscription. No ads. No data to sell. MeshChat is free because privacy shouldn't cost anything.",
+                  desc: "No subscription. No ads. No data to sell. HopChat is free because privacy shouldn't cost anything."
                 },
               ].map(({ emoji, title, desc }) => (
                 <div className="feature-card" key={title}>
@@ -179,7 +179,7 @@ export default function Home() {  const [scrolled, setScrolled] = useState(false
               <div className="download__badge">📲 Ready for iPhone</div>
               <h2 className="download__title">Start chatting privately today</h2>
               <p className="download__sub">
-                Free download · No account needed · No phone number required
+                Free download · No account needed
               </p>
               <a
                 href="https://apps.apple.com"
@@ -208,10 +208,10 @@ export default function Home() {  const [scrolled, setScrolled] = useState(false
         <footer className="footer">
           <div className="container footer__inner">
             <span className="footer__logo">
-              💬 MeshChat
+              💬 HopChat
             </span>
             <span className="footer__copy">
-              © {new Date().getFullYear()} MeshChat · Built with ❤️ for privacy
+              © {new Date().getFullYear()} HopChat · Built with ❤️ for privacy
             </span>
             <div className="footer__links">
               <a href="#">Privacy</a>
