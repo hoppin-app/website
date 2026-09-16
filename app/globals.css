@@ -1,26 +1,661 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Design tokens
+   Palette mirrors Apple's own marketing surfaces so the site reads as a
+   natural extension of the iOS app.
+   ========================================================================== */
+
+/* Light is the primary theme and applies to everyone, including visitors whose
+   system is set to dark. `color-scheme: light` keeps form controls, scrollbars
+   and the like light too, rather than letting the OS darken them. */
 :root {
+  color-scheme: light;
+
   --background: #ffffff;
-  --foreground: #171717;
+  --surface: #f5f5f7;
+  --surface-raised: #ffffff;
+  --foreground: #1d1d1f;
+  --muted: #6e6e73;
+  --border: rgba(0, 0, 0, 0.09);
+  /* --accent is for text and icons, --brand for buttons (white on top).
+     They differ in the dark theme, where a legible blue text colour is too
+     light to carry white text. */
+  --accent: #0067cf;
+  --brand: #0067cf;
+  --glow: #0071e3;
+  --ios-blue: #007aff;
+  --ios-green: #34c759;
+  --ios-bubble: #e9e9eb;
+  --nav-bg: rgba(255, 255, 255, 0.72);
+  --shadow-phone: 0 50px 100px -20px rgba(0, 0, 0, 0.25);
+}
+
+/* Secondary theme: soft dark, elevated greys rather than pure black. Opt-in
+   only — set data-theme="dark" on <html> to use it. It is deliberately not
+   wired to prefers-color-scheme, so the light theme stays primary. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #1c1c1e;
+  --surface: #2c2c2e;
+  --surface-raised: #3a3a3c;
+  --foreground: #f5f5f7;
+  --muted: #a1a1a6;
+  --border: rgba(255, 255, 255, 0.14);
+  --accent: #6cb8ff;
+  --brand: #0a6fe0;
+  --glow: #0a84ff;
+  --ios-blue: #0a84ff;
+  --ios-green: #30d158;
+  --ios-bubble: #3a3a3c;
+  --nav-bg: rgba(28, 28, 30, 0.72);
+  --shadow-phone: 0 50px 100px -20px rgba(0, 0, 0, 0.55);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-muted: var(--muted);
+  --color-hairline: var(--border);
+  --color-accent: var(--accent);
+  --color-brand: var(--brand);
+  --color-ios-blue: var(--ios-blue);
+  --color-ios-green: var(--ios-green);
+  --color-ios-bubble: var(--ios-bubble);
+
+  --font-sans: var(--font-display);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+/* Apple devices render this in real SF Pro; everyone else falls back to Inter. */
+:root {
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", var(--font-inter), "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-display);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   Typography helpers
+   Apple headlines are semibold with tight tracking — never black/900.
+   ========================================================================== */
+
+.t-display {
+  font-size: clamp(2.75rem, 7.2vw, 5.5rem);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.t-title {
+  font-size: clamp(2rem, 4.6vw, 3.5rem);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.028em;
+}
+
+.t-subtitle {
+  font-size: clamp(1.0625rem, 1.7vw, 1.5rem);
+  line-height: 1.45;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+}
+
+.t-eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Long-form text pages (privacy, terms, support, join)
+   Plain semantic HTML inside `.legal` picks these up, so the pages stay
+   readable as documents rather than carrying utility classes on every line.
+   ========================================================================== */
+
+.legal h2 {
+  margin-top: 3.25rem;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+}
+
+.legal > h2:first-child {
+  margin-top: 0;
+}
+
+.legal h3 {
+  margin-top: 2rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.legal p,
+.legal li {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.legal p {
+  margin-top: 1rem;
+}
+
+.legal ul,
+.legal ol {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.legal li {
+  position: relative;
+  padding-left: 1.15rem;
+}
+
+.legal li::before {
+  content: "";
+  position: absolute;
+  top: 0.68em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: 0.55;
+}
+
+.legal strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.legal code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  white-space: nowrap;
+  color: var(--foreground);
+}
+
+.legal a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal hr {
+  margin: 3.25rem 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+.legal .legal-note {
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+}
+
+.legal .legal-note p:first-child {
+  margin-top: 0;
+}
+
+/* ==========================================================================
+   Scroll reveal — opt-in, transform/opacity only, reduced-motion safe
+   ========================================================================== */
+
+/* Visible by default — Reveal.tsx opts elements in once JS is confirmed. */
+.reveal {
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal[data-visible="false"] {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  will-change: opacity, transform;
+}
+
+/* ==========================================================================
+   Scroll story — a pinned stage scrubbed by scroll position
+
+   ScrollStory.tsx writes --p and the derived 0→1 values below; every
+   transform here is calc()'d against them, so scrolling drives the frame
+   directly with no tweening library involved.
+   ========================================================================== */
+
+.story-spacer {
+  height: 420vh;
+}
+
+.story-stage {
+  position: sticky;
+  top: 3rem;
+  display: flex;
+  height: calc(100svh - 3rem);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vh, 2.5rem);
+  overflow: hidden;
+
+  /* Defaults for the pre-hydration frame and for no-JS visitors. */
+  --p: 0;
+  --sep: 1;
+  --draw: 1;
+  --sent: 1;
+  --packet: 1;
+  --landed: 1;
+  --server: 0;
+  --strike: 0;
+}
+
+/* --- devices ------------------------------------------------------------ */
+
+/* The stage box is a fixed 720×420 so the SVG path coordinates stay valid at
+   every breakpoint; only its scale changes. It is centred absolutely because
+   grid centring breaks once the box is wider than the viewport. */
+.story-devices-wrap {
+  --stage-scale: 0.44;
+  position: relative;
+  width: 100%;
+  height: calc(420px * var(--stage-scale));
+}
+
+@media (min-width: 480px) {
+  .story-devices-wrap { --stage-scale: 0.58; }
+}
+@media (min-width: 768px) {
+  .story-devices-wrap { --stage-scale: 0.8; }
+}
+@media (min-width: 1024px) {
+  .story-devices-wrap { --stage-scale: 1; }
+}
+
+.story-devices {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 720px;
+  height: 420px;
+  transform: translate(-50%, -50%) scale(var(--stage-scale));
+}
+
+.story-device {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 190px;
+  height: 380px;
+  padding: 3px;
+  border-radius: 2rem;
+  background: linear-gradient(
+    160deg,
+    rgba(180, 180, 190, 0.9),
+    rgba(90, 90, 100, 0.85) 42%,
+    rgba(160, 160, 172, 0.9)
+  );
+  box-shadow: var(--shadow-phone);
+}
+
+.story-device--left {
+  transform: translateX(calc(-50% - var(--sep) * 230px));
+}
+
+.story-device--right {
+  opacity: var(--sep);
+  transform: translateX(calc(-50% + var(--sep) * 230px));
+}
+
+.story-device__screen {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1.85rem;
+  background: var(--background);
+}
+
+.story-device__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.story-device__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ios-green);
+}
+
+.story-device__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px;
+}
+
+.story-device__number {
+  align-self: center;
+  margin-bottom: auto;
+  padding-top: 26px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  /* Fades out as the second device arrives. */
+  opacity: calc(1 - var(--sep));
+}
+
+.story-device__composer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding: 10px 12px;
+}
+
+.story-device__composer span {
+  height: 22px;
+  flex: 1;
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.story-device__composer i {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--ios-blue);
+}
+
+.story-bubble {
+  max-width: 85%;
+  border-radius: 14px;
+  padding: 7px 10px;
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+/* Typed just before it is sent. */
+.story-bubble--me {
+  align-self: flex-end;
+  background: var(--ios-blue);
+  color: #fff;
+  opacity: var(--sent);
+  transform: translateY(calc((1 - var(--sent)) * 8px));
+}
+
+.story-bubble--them {
+  align-self: flex-start;
+  background: var(--ios-bubble);
+  color: var(--foreground);
+}
+
+/* The received message only exists once the packet has arrived. */
+.story-bubble--lands {
+  opacity: var(--landed);
+  transform: translateY(calc((1 - var(--landed)) * 8px));
+}
+
+/* --- connection --------------------------------------------------------- */
+
+.story-arc {
+  position: absolute;
+  inset: 0;
+  width: 720px;
+  height: 420px;
+}
+
+.story-arc__path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--draw));
+}
+
+.story-arc__label {
+  opacity: var(--draw);
+}
+
+.story-packet {
+  offset-path: path("M 232 196 Q 360 120 488 196");
+  offset-distance: calc(var(--packet) * 100%);
+  /* Visible only while in flight — ramps up fast, opacity clamps at 1. */
+  opacity: calc(var(--packet) * 5 * (1 - var(--landed)));
+}
+
+/* --- the relay that holds it sealed -------------------------------------- */
+
+.story-server {
+  position: absolute;
+  top: 232px;
+  left: 50%;
+  width: 190px;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: var(--server);
+}
+
+.story-server__box {
+  display: flex;
+  height: 54px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-raised);
+  padding: 0 16px;
+}
+
+.story-server__box span {
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--muted);
+  opacity: 0.5;
+}
+
+.story-server__label {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* The padlock that settles onto the relay: it can carry the envelope, but
+   the seal is the point — it never gets a key. */
+.story-server__seal {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--background);
+  color: var(--accent);
+  opacity: var(--strike);
+  transform: translateX(-50%) scale(calc(0.8 + var(--strike) * 0.2));
+}
+
+/* --- captions ----------------------------------------------------------- */
+
+.story-captions {
+  position: relative;
+  display: grid;
+  width: 100%;
+  max-width: 34rem;
+  min-height: 8.5rem;
+  padding: 0 1.25rem;
+  text-align: center;
+}
+
+.story-caption {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.story-stage[data-step="0"] .story-caption[data-index="0"],
+.story-stage[data-step="1"] .story-caption[data-index="1"],
+.story-stage[data-step="2"] .story-caption[data-index="2"],
+.story-stage[data-step="3"] .story-caption[data-index="3"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- progress rail ------------------------------------------------------ */
+
+.story-rail {
+  display: flex;
+  gap: 7px;
+}
+
+.story-rail li {
+  width: 26px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--border);
+  transition: background-color 0.35s ease;
+}
+
+.story-stage[data-step="0"] .story-rail li[data-index="0"],
+.story-stage[data-step="1"] .story-rail li[data-index="1"],
+.story-stage[data-step="2"] .story-rail li[data-index="2"],
+.story-stage[data-step="3"] .story-rail li[data-index="3"] {
+  background: var(--accent);
+}
+
+/* Without the scroll driver the stage would pin forever, so unpin it and
+   let the finished frame read as a normal static illustration. */
+@media (prefers-reduced-motion: reduce) {
+  .story-spacer {
+    height: auto;
+  }
+
+  .story-stage {
+    position: static;
+    height: auto;
+    padding: 2rem 0;
+  }
+
+  .story-caption {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes packet-direct {
+  0% { offset-distance: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.85); opacity: 0.55; }
+  70% { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+@keyframes bubble-in {
+  from { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+  30% { transform: translateY(-3px); opacity: 1; }
+}
+
+.animate-bubble {
+  opacity: 0;
+  animation: bubble-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.packet {
+  offset-path: var(--path);
+  animation: packet-direct var(--duration, 2.6s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.pulse-ring {
+  animation: pulse-ring 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.typing-dot {
+  animation: typing-dot 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .reveal[data-visible="false"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .animate-bubble,
+  .packet,
+  .pulse-ring,
+  .typing-dot {
+    animation: none;
+    opacity: 1;
+  }
 }
