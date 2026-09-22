@@ -3,15 +3,15 @@ import Link from "next/link";
 import LegalShell from "../components/LegalShell";
 
 export const metadata: Metadata = {
-  title: "Support — HopChat",
+  title: "Support — hoppin",
   description:
-    "How to get help with HopChat: verification, safety numbers, blocking and reporting, app lock, deleting your account, and how to reach us.",
+    "How to get help with hoppin: verification, safety numbers, blocking and reporting, app lock, deleting your account, and how to reach us.",
   openGraph: {
-    title: "Support — HopChat",
+    title: "Support — hoppin",
     description:
-      "How to get help with HopChat: verification, safety numbers, blocking and reporting, app lock, deleting your account, and how to reach us.",
+      "How to get help with hoppin: verification, safety numbers, blocking and reporting, app lock, deleting your account, and how to reach us.",
     url: "/support",
-    siteName: "HopChat",
+    siteName: "hoppin",
     type: "website",
   },
 };
@@ -46,7 +46,7 @@ export default function SupportPage() {
         <li>iPhone running iOS 18 or later.</li>
         <li>A phone number that can receive an SMS, for one-time verification.</li>
         <li>
-          HopChat is not on the App Store yet. It is coming; in the meantime the
+          hoppin is not on the App Store yet. It is coming; in the meantime the
           source is public and can be built and run yourself.
         </li>
       </ul>
@@ -71,10 +71,10 @@ export default function SupportPage() {
         checked.
       </p>
 
-      <h3>HopChat says a contact&rsquo;s key changed</h3>
+      <h3>hoppin says a contact&rsquo;s key changed</h3>
       <p>
         That happens when they reinstall the app or move to a new device — and
-        it is also what an impersonation attempt would look like. HopChat blocks
+        it is also what an impersonation attempt would look like. hoppin blocks
         sending until you acknowledge the change. Confirm with the person over a
         channel you trust, or compare safety numbers again, before you continue.
       </p>

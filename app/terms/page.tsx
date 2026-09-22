@@ -3,15 +3,15 @@ import Link from "next/link";
 import LegalShell from "../components/LegalShell";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — HopChat",
+  title: "Terms of Service — hoppin",
   description:
-    "The rules for using HopChat: acceptable use, zero tolerance for objectionable content and abusive users, reporting, termination and disclaimers.",
+    "The rules for using hoppin: acceptable use, zero tolerance for objectionable content and abusive users, reporting, termination and disclaimers.",
   openGraph: {
-    title: "Terms of Service — HopChat",
+    title: "Terms of Service — hoppin",
     description:
-      "The rules for using HopChat: acceptable use, zero tolerance for objectionable content and abusive users, reporting, termination and disclaimers.",
+      "The rules for using hoppin: acceptable use, zero tolerance for objectionable content and abusive users, reporting, termination and disclaimers.",
     url: "/terms",
-    siteName: "HopChat",
+    siteName: "hoppin",
     type: "website",
   },
 };
@@ -26,12 +26,12 @@ export default function TermsPage() {
       <p>
         These terms are an agreement between you and{" "}
         <strong>[Company/Developer legal name]</strong> (&ldquo;we&rdquo;,
-        &ldquo;us&rdquo;) covering your use of the HopChat app and this website.
-        By verifying your phone number and using HopChat, you accept them. If
-        you do not accept them, do not use HopChat.
+        &ldquo;us&rdquo;) covering your use of the hoppin app and this website.
+        By verifying your phone number and using hoppin, you accept them. If
+        you do not accept them, do not use hoppin.
       </p>
 
-      <h2>2. Who may use HopChat</h2>
+      <h2>2. Who may use hoppin</h2>
       <p>
         You must be at least 13 years old, and at least 16 if you are in the
         European Union, or the minimum age of digital consent in your country if
@@ -41,7 +41,7 @@ export default function TermsPage() {
 
       <h2>3. Your number and your keys</h2>
       <p>
-        HopChat identifies you by a phone number you verify by SMS. You must use
+        hoppin identifies you by a phone number you verify by SMS. You must use
         a number you are entitled to use. You are responsible for the security
         of your device and for what is sent from it. If you lose access to your
         number or device, your keys and your locally stored conversations cannot
@@ -49,7 +49,7 @@ export default function TermsPage() {
       </p>
 
       <h2>4. Acceptable use</h2>
-      <p>You agree not to use HopChat to:</p>
+      <p>You agree not to use hoppin to:</p>
       <ul>
         <li>
           send, request or distribute content that is unlawful, including child
@@ -83,7 +83,7 @@ export default function TermsPage() {
       <p>
         <strong>
           We have no tolerance for objectionable content or abusive behaviour on
-          HopChat.
+          hoppin.
         </strong>{" "}
         Messages are end-to-end encrypted, so we cannot proactively scan them —
         which makes your reports the mechanism that matters. When you report a
@@ -109,7 +109,7 @@ export default function TermsPage() {
 
       <h2>6. Content you send</h2>
       <p>
-        You keep all rights to what you send. Because HopChat is end-to-end
+        You keep all rights to what you send. Because hoppin is end-to-end
         encrypted, we do not host, review, publish or licence your content; the
         only copies are on the devices in the conversation, plus a sealed,
         unreadable copy on our relay for at most 7 days if the recipient is
@@ -121,14 +121,14 @@ export default function TermsPage() {
       <p>
         We may suspend or terminate your access at any time, without notice, if
         you breach these terms, if we are required to by law, or if your use
-        endangers the service or other users. You may stop using HopChat at any
+        endangers the service or other users. You may stop using hoppin at any
         time and can remove your account and your data from our server using{" "}
         <strong>Delete Account</strong> in the app&rsquo;s settings.
       </p>
 
       <h2>8. The service as it is</h2>
       <p>
-        HopChat is provided <strong>&ldquo;as is&rdquo;</strong> and{" "}
+        hoppin is provided <strong>&ldquo;as is&rdquo;</strong> and{" "}
         <strong>&ldquo;as available&rdquo;</strong>, without warranties of any
         kind, whether express or implied, including any implied warranties of
         merchantability, fitness for a particular purpose, or
@@ -143,7 +143,7 @@ export default function TermsPage() {
       <p>
         To the fullest extent permitted by law, we are not liable for indirect,
         incidental, special or consequential damages, or for lost data, lost
-        messages or lost profits arising out of your use of HopChat. Nothing in
+        messages or lost profits arising out of your use of hoppin. Nothing in
         these terms limits liability for death or personal injury caused by
         negligence, for fraud, or for anything else that cannot be limited by
         law.
@@ -153,7 +153,7 @@ export default function TermsPage() {
       <p>
         We may update these terms. The date at the top of this page shows when
         they last changed, and material changes will be notified in the app.
-        Continuing to use HopChat after a change means you accept the updated
+        Continuing to use hoppin after a change means you accept the updated
         terms.
       </p>
 

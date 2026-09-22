@@ -17,16 +17,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hopchat.app"),
-  title: "HopChat — End-to-end encrypted messaging for iPhone",
+  metadataBase: new URL("https://hoppin.app"),
+  title: "hoppin — End-to-end encrypted messaging for iPhone",
   description:
-    "HopChat delivers end-to-end encrypted messages between iPhones — directly over your local network, or through a relay that only ever holds sealed ciphertext. Messages, photos and contacts stay on your device.",
+    "hoppin delivers end-to-end encrypted messages between iPhones — directly over your local network, or through a relay that only ever holds sealed ciphertext. Messages, photos and contacts stay on your device.",
   openGraph: {
-    title: "HopChat — End-to-end encrypted messaging for iPhone",
+    title: "hoppin — End-to-end encrypted messaging for iPhone",
     description:
       "End-to-end encrypted messaging for iPhone. Direct on your local network, relayed as sealed ciphertext everywhere else. Messages stay on your device.",
     url: "/",
-    siteName: "HopChat",
+    siteName: "hoppin",
     type: "website",
   },
 };

@@ -8,7 +8,7 @@ import ScrollVideo, { type ScrollVideoCaption } from "../components/ScrollVideo"
    real footage before using it on the landing page. */
 
 export const metadata: Metadata = {
-  title: "Scroll video demo — HopChat",
+  title: "Scroll video demo — hoppin",
   robots: { index: false, follow: false },
 };
 

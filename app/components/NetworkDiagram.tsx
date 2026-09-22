@@ -54,7 +54,7 @@ export function RelayDiagram() {
       viewBox="0 0 300 150"
       className="w-full text-foreground"
       role="img"
-      aria-label="Diagram: an encrypted message from one phone waits on the HopChat relay until the other phone fetches it."
+      aria-label="Diagram: an encrypted message from one phone waits on the hoppin relay until the other phone fetches it."
     >
       <path
         d={RELAY_PATH}

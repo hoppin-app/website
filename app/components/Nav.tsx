@@ -43,7 +43,7 @@ export default function Nav() {
           className="-my-2 flex cursor-pointer items-center gap-2 py-2 text-[15px] font-semibold tracking-[-0.01em]"
         >
           <HopMark className="h-[18px] w-[18px] text-accent" />
-          HopChat
+          hoppin
         </Link>
 
         <ul className="hidden items-center gap-8 md:flex">
@@ -63,7 +63,7 @@ export default function Nav() {
           href="/#download"
           className="relative cursor-pointer rounded-full bg-brand px-4 py-1.5 text-[12px] font-medium text-white transition-opacity duration-200 after:absolute after:inset-x-0 after:-inset-y-[9px] after:content-[''] hover:opacity-85"
         >
-          Get HopChat
+          Get hoppin
         </Link>
       </nav>
     </header>

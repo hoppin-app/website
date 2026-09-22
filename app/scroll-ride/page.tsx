@@ -7,7 +7,7 @@ import ScrollVideo, { type ScrollVideoCaption } from "../components/ScrollVideo"
    from a 6 s portrait clip). Not linked from the site. */
 
 export const metadata: Metadata = {
-  title: "Scroll ride demo — HopChat",
+  title: "Scroll ride demo — hoppin",
   robots: { index: false, follow: false },
 };
 
@@ -46,7 +46,7 @@ export default function ScrollRidePage() {
         <section className="px-6 py-32 text-center">
           <h2 className="text-4xl font-bold tracking-tight">Signal or not, it gets there.</h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-muted">
-            On the same Wi-Fi, HopChat goes phone to phone. Everywhere else, the relay carries a
+            On the same Wi-Fi, hoppin goes phone to phone. Everywhere else, the relay carries a
             sealed envelope it can&rsquo;t read.
           </p>
         </section>

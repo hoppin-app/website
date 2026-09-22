@@ -3,15 +3,15 @@ import Link from "next/link";
 import LegalShell from "../components/LegalShell";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — HopChat",
+  title: "Privacy Policy — hoppin",
   description:
-    "What HopChat processes, what it never collects, how long anything is kept, and how to have it deleted.",
+    "What hoppin processes, what it never collects, how long anything is kept, and how to have it deleted.",
   openGraph: {
-    title: "Privacy Policy — HopChat",
+    title: "Privacy Policy — hoppin",
     description:
-      "What HopChat processes, what it never collects, how long anything is kept, and how to have it deleted.",
+      "What hoppin processes, what it never collects, how long anything is kept, and how to have it deleted.",
     url: "/privacy",
-    siteName: "HopChat",
+    siteName: "hoppin",
     type: "website",
   },
 };
@@ -20,11 +20,11 @@ export default function PrivacyPage() {
   return (
     <LegalShell
       title="Privacy Policy"
-      intro="HopChat is built so that there is very little to write down here. This page says exactly what does exist."
+      intro="hoppin is built so that there is very little to write down here. This page says exactly what does exist."
     >
       <h2>Who is responsible</h2>
       <p>
-        HopChat (&ldquo;the app&rdquo;) is provided by{" "}
+        hoppin (&ldquo;the app&rdquo;) is provided by{" "}
         <strong>[Company/Developer legal name]</strong>, based in Portugal
         (&ldquo;we&rdquo;, &ldquo;us&rdquo;). For the purposes of the EU General
         Data Protection Regulation (GDPR), we are the controller of the personal
@@ -63,7 +63,7 @@ export default function PrivacyPage() {
 
       <h3>Your phone number</h3>
       <p>
-        To use HopChat you verify one phone number with a code sent by SMS. We
+        To use hoppin you verify one phone number with a code sent by SMS. We
         store the number so that we can issue your identity certificate and
         route incoming messages to you. Verification codes are stored only as a
         salted hash, expire after ten minutes and are never written to our logs.
@@ -132,7 +132,7 @@ export default function PrivacyPage() {
 
       <h3>Crash reports</h3>
       <p>
-        Once HopChat is distributed through the App Store, Apple may share
+        Once hoppin is distributed through the App Store, Apple may share
         aggregated crash and performance reports with us if you have enabled
         sharing in your iOS settings. These are provided by Apple, contain no
         message content, and are governed by Apple&rsquo;s own privacy terms.
@@ -163,7 +163,7 @@ export default function PrivacyPage() {
         </li>
         <li>
           <strong>Location data, your name, your email address or payment
-          details.</strong> HopChat never asks for them.
+          details.</strong> hoppin never asks for them.
         </li>
       </ul>
 
@@ -222,7 +222,7 @@ export default function PrivacyPage() {
 
       <h2>Deleting your data</h2>
       <p>
-        HopChat has a <strong>Delete Account</strong> option in Settings. Using
+        hoppin has a <strong>Delete Account</strong> option in Settings. Using
         it tells the server to delete your certificate, your queued messages and
         your registration, and wipes the keys and conversations stored on your
         device. Deleting the app alone removes everything stored locally, but
@@ -246,7 +246,7 @@ export default function PrivacyPage() {
 
       <h2>Children</h2>
       <p>
-        HopChat is not directed to children. You must be at least 13 years old
+        hoppin is not directed to children. You must be at least 13 years old
         to use it, and at least 16 if you are in the European Union, or the
         minimum age of digital consent in your country if that is higher. We do
         not knowingly collect data from children below that age; if we learn

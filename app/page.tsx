@@ -32,7 +32,7 @@ const features = [
   {
     icon: ShieldIcon,
     title: "Keys you can check",
-    body: "A contact's key is pinned the first time you see it. If it ever changes, HopChat warns you before you can send — and you can compare safety numbers or scan their QR code in person.",
+    body: "A contact's key is pinned the first time you see it. If it ever changes, hoppin warns you before you can send — and you can compare safety numbers or scan their QR code in person.",
   },
   {
     icon: WifiIcon,
@@ -61,7 +61,7 @@ const steps = [
   {
     n: "02",
     title: "Pin their keys",
-    body: "Before the first message, HopChat fetches your contact's certificate and pins it. A later key change is flagged and has to be acknowledged, never silently accepted.",
+    body: "Before the first message, hoppin fetches your contact's certificate and pins it. A later key change is flagged and has to be acknowledged, never silently accepted.",
     detail: "certificate → pinned on first sight",
   },
   {
@@ -101,7 +101,7 @@ const serverSees = [
 const serverCannotSee = [
   "The content of any message, photo or caption. It only ever holds ciphertext.",
   "Anything at all about messages delivered over your local network — those never reach it.",
-  "Your address book. HopChat only asks about numbers you actually message.",
+  "Your address book. hoppin only asks about numbers you actually message.",
   "Your message history. Nothing is kept once a message has been fetched and acknowledged.",
   "Anything it could hand to an analytics or advertising provider, because there are none.",
 ];
@@ -139,7 +139,7 @@ export default function Home() {
 
             <Reveal delay={120}>
               <p className="t-subtitle mx-auto mt-6 max-w-[34rem] text-balance text-muted">
-                On the same Wi-Fi, HopChat delivers device to device. Everywhere
+                On the same Wi-Fi, hoppin delivers device to device. Everywhere
                 else it goes through a relay that only ever holds the sealed
                 envelope. Your messages and photos live on your phone.
               </p>
@@ -152,7 +152,7 @@ export default function Home() {
                   className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-brand px-7 py-3 text-[15px] font-medium text-white transition-opacity duration-200 hover:opacity-85"
                 >
                   <AppleIcon className="h-[18px] w-[18px]" />
-                  Get HopChat
+                  Get hoppin
                 </a>
                 <a
                   href="#direct"
@@ -173,13 +173,13 @@ export default function Home() {
             <div className="relative mx-auto mt-16 flex max-w-5xl items-center justify-center">
               <div className="flex items-end justify-center gap-6 sm:gap-14">
                 <Phone
-                  label="HopChat conversation list showing unread messages and the floating tab bar"
+                  label="hoppin conversation list showing unread messages and the floating tab bar"
                   className="hidden sm:block lg:-rotate-2"
                 >
                   <ChatListScreen />
                 </Phone>
                 <Phone
-                  label="A HopChat conversation with end-to-end encrypted messages"
+                  label="A hoppin conversation with end-to-end encrypted messages"
                   className="lg:rotate-2"
                 >
                   <ChatRoomScreen />
@@ -200,7 +200,7 @@ export default function Home() {
               </h2>
               <p className="t-subtitle mt-5 text-balance text-muted">
                 Your message goes up to their server as something the company
-                could open. Scroll to watch HopChat seal it first.
+                could open. Scroll to watch hoppin seal it first.
               </p>
             </Reveal>
 
@@ -386,7 +386,7 @@ export default function Home() {
                 Cryptography you can look up.
               </h2>
               <p className="t-subtitle mt-5 text-muted">
-                No invented primitives and no proprietary protocol. HopChat uses
+                No invented primitives and no proprietary protocol. hoppin uses
                 Apple&rsquo;s CryptoKit with well-understood algorithms, and the
                 source is public so you can check every line of it.
               </p>

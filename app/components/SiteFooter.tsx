@@ -2,7 +2,7 @@ import Link from "next/link";
 import { HopMark } from "./HopMark";
 import { GithubIcon } from "./icons";
 
-export const REPO_URL = "https://github.com/rloucao/HopChat-Swift";
+export const REPO_URL = "https://github.com/rloucao/hoppin-Swift";
 
 const legalLinks = [
   { href: "/privacy", label: "Privacy" },
@@ -20,7 +20,7 @@ export default function SiteFooter() {
             className="flex cursor-pointer items-center gap-2 text-[13px] text-muted transition-colors duration-200 hover:text-foreground"
           >
             <HopMark className="h-4 w-4" />
-            <span>HopChat</span>
+            <span>hoppin</span>
           </Link>
 
           <nav aria-label="Footer">
@@ -42,7 +42,7 @@ export default function SiteFooter() {
             href={REPO_URL}
             target="_blank"
             rel="noreferrer noopener"
-            aria-label="HopChat on GitHub"
+            aria-label="hoppin on GitHub"
             className="cursor-pointer text-muted transition-colors duration-200 hover:text-foreground"
           >
             <GithubIcon className="h-[18px] w-[18px]" />

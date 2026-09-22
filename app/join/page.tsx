@@ -7,15 +7,15 @@ import { HopMark } from "../components/HopMark";
 import { AppleIcon, GithubIcon, LockIcon, PhoneIdIcon, WifiIcon } from "../components/icons";
 
 export const metadata: Metadata = {
-  title: "You have been invited to HopChat",
+  title: "You have been invited to hoppin",
   description:
-    "Someone wants to message you on HopChat: end-to-end encrypted messaging for iPhone. Coming to the App Store. Requires iOS 18 or later.",
+    "Someone wants to message you on hoppin: end-to-end encrypted messaging for iPhone. Coming to the App Store. Requires iOS 18 or later.",
   openGraph: {
-    title: "You have been invited to HopChat",
+    title: "You have been invited to hoppin",
     description:
-      "Someone wants to message you on HopChat: end-to-end encrypted messaging for iPhone. Coming to the App Store. Requires iOS 18 or later.",
+      "Someone wants to message you on hoppin: end-to-end encrypted messaging for iPhone. Coming to the App Store. Requires iOS 18 or later.",
     url: "/join",
-    siteName: "HopChat",
+    siteName: "hoppin",
     type: "website",
   },
 };
@@ -58,13 +58,13 @@ export default function JoinPage() {
 
             <Reveal delay={60}>
               <h1 className="t-title mt-7 text-balance">
-                Someone wants to message you on HopChat.
+                Someone wants to message you on hoppin.
               </h1>
             </Reveal>
 
             <Reveal delay={120}>
               <p className="t-subtitle mx-auto mt-5 max-w-[32rem] text-balance text-muted">
-                HopChat is an end-to-end encrypted messenger for iPhone. Your
+                hoppin is an end-to-end encrypted messenger for iPhone. Your
                 messages and photos stay on your device, and nobody in between —
                 including us — can read them.
               </p>
@@ -114,7 +114,7 @@ export default function JoinPage() {
           <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="t-title text-balance">What happens when you join.</h2>
             <p className="t-subtitle mt-5 text-balance text-muted">
-              You install HopChat, verify your number with a code, and the
+              You install hoppin, verify your number with a code, and the
               person who invited you can reach you. Your contacts stay on your
               phone, and you can block or report anyone from inside the app.
             </p>
