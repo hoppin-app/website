@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import LavaBackground from "./components/LavaBackground";
 
 /* Fallback for non-Apple platforms — Apple devices get real SF Pro
    from the system stack declared in globals.css. */
@@ -18,11 +19,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hoppin.app"),
-  title: "hoppin — End-to-end encrypted messaging for iPhone",
+  title: "hoppin · End-to-end encrypted messaging for iPhone",
   description:
-    "hoppin delivers end-to-end encrypted messages between iPhones — directly over your local network, or through a relay that only ever holds sealed ciphertext. Messages, photos and contacts stay on your device.",
+    "hoppin delivers end-to-end encrypted messages between iPhones, directly over your local network or through a relay that only ever holds sealed ciphertext. Messages, photos and contacts stay on your device.",
   openGraph: {
-    title: "hoppin — End-to-end encrypted messaging for iPhone",
+    title: "hoppin · End-to-end encrypted messaging for iPhone",
     description:
       "End-to-end encrypted messaging for iPhone. Direct on your local network, relayed as sealed ciphertext everywhere else. Messages stay on your device.",
     url: "/",
@@ -34,8 +35,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  // Light is the primary theme, so the browser chrome matches it everywhere.
-  themeColor: "#ffffff",
+  // The browser chrome matches the base the lava blobs sit on.
+  themeColor: "#0a0817",
 };
 
 export default function RootLayout({
@@ -49,6 +50,7 @@ export default function RootLayout({
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <LavaBackground />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-brand focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-white"

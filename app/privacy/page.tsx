@@ -3,11 +3,11 @@ import Link from "next/link";
 import LegalShell from "../components/LegalShell";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — hoppin",
+  title: "Privacy Policy · hoppin",
   description:
     "What hoppin processes, what it never collects, how long anything is kept, and how to have it deleted.",
   openGraph: {
-    title: "Privacy Policy — hoppin",
+    title: "Privacy Policy · hoppin",
     description:
       "What hoppin processes, what it never collects, how long anything is kept, and how to have it deleted.",
     url: "/privacy",
@@ -182,7 +182,7 @@ export default function PrivacyPage() {
         </li>
         <li>
           <strong>Operational logs containing IP addresses and masked phone
-          numbers:</strong> <strong>[retention period — To be confirmed]</strong>
+          numbers:</strong> <strong>[retention period, to be confirmed]</strong>
           , then deleted.
         </li>
         <li>
@@ -198,12 +198,12 @@ export default function PrivacyPage() {
       </p>
       <ul>
         <li>
-          <strong>SMS delivery</strong> — an SMS provider (currently Twilio)
+          <strong>SMS delivery</strong> uses an SMS provider (currently Twilio)
           receives your phone number and the verification code in order to
           deliver the message to you.
         </li>
         <li>
-          <strong>Hosting</strong> — our server runs on infrastructure provided
+          <strong>Hosting</strong>: our server runs on infrastructure provided
           by <strong>[hosting provider]</strong>.
         </li>
       </ul>
@@ -226,7 +226,7 @@ export default function PrivacyPage() {
         it tells the server to delete your certificate, your queued messages and
         your registration, and wipes the keys and conversations stored on your
         device. Deleting the app alone removes everything stored locally, but
-        does not remove your server-side registration — use Delete Account
+        does not remove your server-side registration. Use Delete Account
         first if you want both.
       </p>
 

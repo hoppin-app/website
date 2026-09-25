@@ -2,8 +2,7 @@ import Link from "next/link";
 import Nav from "./components/Nav";
 import Reveal from "./components/Reveal";
 import SiteFooter, { REPO_URL } from "./components/SiteFooter";
-import { Phone, ChatListScreen, ChatRoomScreen } from "./components/Phone";
-import ScrollStory from "./components/ScrollStory";
+import Shot from "./components/Shot";
 import { HopMark } from "./components/HopMark";
 import {
   LockIcon,
@@ -21,33 +20,69 @@ import {
 const features = [
   {
     icon: LockIcon,
+    span: "lg:col-span-2",
+    edge: "var(--lava-violet)",
     title: "Encrypted end to end",
     body: "Every message is sealed with a fresh ephemeral key before it leaves your phone: Curve25519 key agreement, AES-GCM encryption, signed on the way out and verified on the way in. There is no plaintext fallback.",
   },
   {
     icon: PhoneIdIcon,
+    span: "",
+    edge: "var(--lava-pink)",
     title: "Your number is your identity",
     body: "Verify your number once with an SMS code and the server signs a certificate for your public keys. No password, no email, no profile to fill in.",
   },
   {
     icon: ShieldIcon,
+    span: "",
+    edge: "var(--lava-amber)",
     title: "Keys you can check",
-    body: "A contact's key is pinned the first time you see it. If it ever changes, hoppin warns you before you can send — and you can compare safety numbers or scan their QR code in person.",
+    body: "A contact's key is pinned the first time you see it. If it ever changes, hoppin warns you before you can send, and you can compare safety numbers or scan their QR code in person.",
   },
   {
     icon: WifiIcon,
+    span: "",
+    edge: "var(--lava-teal)",
     title: "Direct on your network",
     body: "On the same Wi-Fi, devices find each other over Bonjour and connect straight across. Same room, same network, no detour through the internet.",
   },
   {
     icon: NetworkIcon,
+    span: "",
+    edge: "var(--lava-blue)",
     title: "Relayed only when it has to be",
     body: "Off your network, a small relay holds the sealed message until their phone fetches it, for up to 7 days. It routes ciphertext and never holds a key that could open it.",
   },
   {
     icon: NoServerIcon,
+    span: "lg:col-span-2",
+    edge: "var(--lava-violet)",
     title: "Kept on your device",
     body: "Messages, photos and contacts are stored on your iPhone and excluded from backups. Groups up to 32, read receipts, delete for everyone, block and report, app lock, delete account.",
+  },
+];
+
+const routes = [
+  {
+    icon: WifiIcon,
+    edge: "var(--lava-teal)",
+    title: "Across the room",
+    body: "Same Wi-Fi, and the two phones find each other over Bonjour and connect straight across. Nothing leaves the network, so there is nothing for a server to hold.",
+    mark: "route: direct",
+  },
+  {
+    icon: NetworkIcon,
+    edge: "var(--lava-blue)",
+    title: "Across the country",
+    body: "Different networks, and the relay takes the sealed envelope and keeps it for up to seven days until their phone comes and fetches it.",
+    mark: "route: relay",
+  },
+  {
+    icon: NoServerIcon,
+    edge: "var(--lava-violet)",
+    title: "With no internet at all",
+    body: "No Wi-Fi, no data, no problem worth panicking about. The message hops between nearby phones over Bluetooth until it reaches the one it is addressed to.",
+    mark: "route: mesh",
   },
 ];
 
@@ -87,20 +122,20 @@ const guarantees = [
   "Unsigned messages, or messages from an unverifiable certificate, are dropped rather than shown.",
   "A message that fails to decrypt is discarded, never displayed raw.",
   "A contact's key change blocks sending until you acknowledge it.",
-  "No analytics, no trackers and no third-party SDKs — in the app or on this site.",
+  "No analytics, no trackers and no third-party SDKs, in the app or on this site.",
 ];
 
 const serverSees = [
   "Your phone number, which it verifies by SMS and uses to route messages to you.",
   "The numbers you look up or address a message to.",
   "The IP address your device connects from, and the time and size of what it deposits or fetches.",
-  "Sealed messages waiting for delivery — kept for up to 7 days, deleted once fetched.",
+  "Sealed messages waiting for delivery, kept for up to 7 days and deleted once fetched.",
   "Reports you send, including any message evidence you choose to attach.",
 ];
 
 const serverCannotSee = [
   "The content of any message, photo or caption. It only ever holds ciphertext.",
-  "Anything at all about messages delivered over your local network — those never reach it.",
+  "Anything at all about messages delivered over your local network. Those never reach it.",
   "Your address book. hoppin only asks about numbers you actually message.",
   "Your message history. Nothing is kept once a message has been fetched and acknowledged.",
   "Anything it could hand to an analytics or advertising provider, because there are none.",
@@ -115,100 +150,135 @@ export default function Home() {
         {/* ================================================================
             Hero
             ================================================================ */}
-        <section className="relative overflow-hidden px-5 pb-4 pt-16 sm:px-8 sm:pt-24">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[620px] w-[900px] -translate-x-1/2 rounded-full opacity-[0.13] blur-[110px]"
-            style={{ background: "var(--glow)" }}
-          />
+        <section className="relative px-5 pb-8 pt-16 sm:px-8 sm:pt-24">
+          <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+            <div>
+              <Reveal>
+                <p className="t-eyebrow text-accent">
+                  End-to-end encrypted messaging for iPhone
+                </p>
+              </Reveal>
 
-          <div className="mx-auto max-w-3xl text-center">
-            <Reveal>
-              <p className="t-eyebrow text-accent">
-                End-to-end encrypted messaging for iPhone
-              </p>
-            </Reveal>
+              <Reveal delay={60}>
+                <h1 className="t-display mt-4 text-balance">
+                  Straight to them.
+                  <br />
+                  <span className="text-muted">Sealed either way.</span>
+                </h1>
+              </Reveal>
 
-            <Reveal delay={60}>
-              <h1 className="t-display mt-4 text-balance">
-                Straight to them.
-                <br />
-                <span className="text-muted">Sealed either way.</span>
-              </h1>
-            </Reveal>
+              <Reveal delay={120}>
+                <p className="t-subtitle mt-6 max-w-[34rem] text-pretty text-muted">
+                  On the same Wi-Fi, hoppin delivers device to device.
+                  Everywhere else it goes through a relay that only ever holds
+                  the sealed envelope. Your messages and photos live on your
+                  phone.
+                </p>
+              </Reveal>
 
-            <Reveal delay={120}>
-              <p className="t-subtitle mx-auto mt-6 max-w-[34rem] text-balance text-muted">
-                On the same Wi-Fi, hoppin delivers device to device. Everywhere
-                else it goes through a relay that only ever holds the sealed
-                envelope. Your messages and photos live on your phone.
-              </p>
-            </Reveal>
+              <Reveal delay={180}>
+                <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <a
+                    href="#download"
+                    className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-brand px-7 py-3 text-[15px] font-medium text-white transition-colors duration-200 hover:bg-[var(--brand-hover)]"
+                  >
+                    <AppleIcon className="h-[18px] w-[18px]" />
+                    Get hoppin
+                  </a>
+                  <a
+                    href="#routes"
+                    className="group inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full px-5 py-3 text-[15px] text-accent transition-colors duration-200 hover:text-foreground"
+                  >
+                    See how it works
+                    <ArrowIcon className="h-[15px] w-[15px] transition-transform duration-200 group-hover:translate-x-0.5" />
+                  </a>
+                </div>
+                <p className="mt-5 text-[12.5px] text-muted">
+                  Coming soon to the App Store · Requires iOS 18 or later
+                </p>
+              </Reveal>
+            </div>
 
-            <Reveal delay={180}>
-              <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <a
-                  href="#download"
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-brand px-7 py-3 text-[15px] font-medium text-white transition-opacity duration-200 hover:opacity-85"
-                >
-                  <AppleIcon className="h-[18px] w-[18px]" />
-                  Get hoppin
-                </a>
-                <a
-                  href="#direct"
-                  className="group inline-flex cursor-pointer items-center gap-1.5 rounded-full px-5 py-3 text-[15px] text-accent transition-colors duration-200 hover:text-foreground"
-                >
-                  See how it works
-                  <ArrowIcon className="h-[15px] w-[15px] transition-transform duration-200 group-hover:translate-x-0.5" />
-                </a>
-              </div>
-              <p className="mt-5 text-[12.5px] text-muted">
-                Coming soon to the App Store · Requires iOS 18 or later
-              </p>
+            {/* One screenshot, at reading size, rather than a row of props. */}
+            <Reveal delay={220} className="mx-auto w-[74%] max-w-[330px] lg:w-full">
+              <Shot
+                src="/shots/chat.webp"
+                alt="A hoppin conversation. Three received messages and one sent, over the app's drifting background."
+                priority
+                sizes="(max-width: 1024px) 74vw, 380px"
+              />
             </Reveal>
           </div>
-
-          {/* Two devices, one hop */}
-          <Reveal delay={220}>
-            <div className="relative mx-auto mt-16 flex max-w-5xl items-center justify-center">
-              <div className="flex items-end justify-center gap-6 sm:gap-14">
-                <Phone
-                  label="hoppin conversation list showing unread messages and the floating tab bar"
-                  className="hidden sm:block lg:-rotate-2"
-                >
-                  <ChatListScreen />
-                </Phone>
-                <Phone
-                  label="A hoppin conversation with end-to-end encrypted messages"
-                  className="lg:rotate-2"
-                >
-                  <ChatRoomScreen />
-                </Phone>
-              </div>
-            </div>
-          </Reveal>
         </section>
 
         {/* ================================================================
             The point
             ================================================================ */}
-        <section id="direct" className="scroll-mt-16 px-5 pt-24 sm:px-8 sm:pt-32">
+        <section id="routes" className="scroll-mt-16 px-5 pt-24 sm:px-8 sm:pt-32">
           <div className="mx-auto max-w-6xl">
-            <Reveal className="mx-auto max-w-2xl text-center">
-              <h2 className="t-title text-balance">
-                Every other messenger can read what it carries.
+            <Reveal className="max-w-2xl">
+              <p className="t-eyebrow text-accent">Three ways out</p>
+              <h2 className="t-title mt-3 text-balance">
+                The message leaves by whichever door is open.
               </h2>
-              <p className="t-subtitle mt-5 text-balance text-muted">
-                Your message goes up to their server as something the company
-                could open. Scroll to watch hoppin seal it first.
+              <p className="t-subtitle mt-5 text-pretty text-muted">
+                Same sealed envelope every time. What changes is the road it
+                takes, and the app tells you which one it took.
               </p>
             </Reveal>
 
-            {/* Pinned stage: scroll position scrubs the whole sequence */}
-            <ScrollStory />
+            <div className="mt-14 grid gap-4 md:grid-cols-3">
+              {routes.map((route, i) => (
+                <Reveal
+                  as="article"
+                  key={route.title}
+                  delay={i * 60}
+                  className="edge-top glass glass-hover relative overflow-hidden rounded-3xl p-7 sm:p-8"
+                  style={{ "--edge-color": route.edge } as React.CSSProperties}
+                >
+                  <route.icon className="h-[26px] w-[26px] text-accent" />
+                  <h3 className="mt-5 text-[19px] font-semibold tracking-[-0.02em]">
+                    {route.title}
+                  </h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                    {route.body}
+                  </p>
+                  <code className="mt-5 block font-mono text-[12px] text-accent">
+                    {route.mark}
+                  </code>
+                </Reveal>
+              ))}
+            </div>
 
-            {/* Honest footnote — what the one piece of infrastructure does */}
-            <Reveal className="mx-auto mt-4 mb-24 flex max-w-3xl items-start gap-4 rounded-2xl border border-hairline px-6 py-5 sm:mb-32">
+            {/* The Bluetooth route is the one nobody believes, so it gets the
+                screenshot: the real setting, with the real explanation. */}
+            <div className="mt-20 grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+              <Reveal className="mx-auto w-[70%] max-w-[300px] lg:w-full lg:max-w-[340px]">
+                <Shot
+                  src="/shots/mesh.webp"
+                  alt="The Bluetooth mesh screen in hoppin, showing the radio switched on and its current status."
+                />
+              </Reveal>
+
+              <Reveal delay={80}>
+                <h3 className="t-title text-balance">
+                  No signal, and it still goes.
+                </h3>
+                <p className="t-subtitle mt-5 text-pretty text-muted">
+                  With no Wi-Fi and no mobile data, a message hops phone to
+                  phone over Bluetooth until it reaches the person you sent it
+                  to. Every phone that carries it is holding something it
+                  cannot read, cannot attribute and cannot address. That is
+                  what makes it safe to pass along.
+                </p>
+                <p className="mt-5 text-[15px] leading-relaxed text-muted">
+                  The radio only runs while you are offline, so it costs
+                  nothing the rest of the time.
+                </p>
+              </Reveal>
+            </div>
+
+            <Reveal className="glass mx-auto mt-20 mb-24 flex max-w-3xl items-start gap-4 rounded-2xl px-6 py-5 sm:mb-32">
               <ShieldIcon className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
               <p className="text-[14px] leading-relaxed text-muted">
                 <span className="font-medium text-foreground">
@@ -231,7 +301,7 @@ export default function Home() {
             ================================================================ */}
         <section
           id="features"
-          className="scroll-mt-16 border-y border-hairline bg-surface px-5 py-24 sm:px-8 sm:py-32"
+          className="scroll-mt-16 border-y border-hairline px-5 py-24 sm:px-8 sm:py-32"
         >
           <div className="mx-auto max-w-6xl">
             <Reveal className="max-w-2xl">
@@ -241,11 +311,20 @@ export default function Home() {
               </h2>
             </Reveal>
 
-            <ul className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Bento: the two widest claims get a double cell, the rest sit
+                on a single one, so the grid has a reading order instead of
+                six identical tiles. */}
+            <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {features.map((feature, i) => (
-                <Reveal as="li" key={feature.title} delay={i * 40}>
+                <Reveal
+                  as="li"
+                  key={feature.title}
+                  delay={i * 40}
+                  className={`edge-top glass glass-hover relative overflow-hidden rounded-3xl p-7 sm:p-8 ${feature.span}`}
+                  style={{ "--edge-color": feature.edge } as React.CSSProperties}
+                >
                   <feature.icon className="h-[26px] w-[26px] text-accent" />
-                  <h3 className="mt-4 text-[19px] font-semibold tracking-[-0.02em]">
+                  <h3 className="mt-5 text-[19px] font-semibold tracking-[-0.02em]">
                     {feature.title}
                   </h3>
                   <p className="mt-2 text-[15px] leading-relaxed text-muted">
@@ -269,13 +348,13 @@ export default function Home() {
               </h2>
             </Reveal>
 
-            <ol className="mt-14 space-y-px overflow-hidden rounded-3xl border border-hairline">
+            <ol className="mt-14 overflow-hidden rounded-3xl border border-hairline">
               {steps.map((step, i) => (
                 <Reveal
                   as="li"
                   key={step.n}
                   delay={i * 60}
-                  className="grid gap-4 bg-surface px-7 py-9 sm:grid-cols-[5rem_1fr_auto] sm:items-baseline sm:gap-8 sm:px-10"
+                  className="glass grid gap-4 border-x-0 border-t-0 px-7 py-9 last:border-b-0 sm:grid-cols-[5rem_1fr_auto] sm:items-baseline sm:gap-8 sm:px-10"
                 >
                   <span className="font-mono text-[13px] text-accent">
                     {step.n}
@@ -298,11 +377,79 @@ export default function Home() {
         </section>
 
         {/* ================================================================
-            Transparency — what the server can and cannot see
+            Key changes, and the settings that back them
+            ================================================================ */}
+        <section id="keys" className="scroll-mt-16 px-5 py-24 sm:px-8 sm:py-32">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+              <Reveal>
+                <p className="t-eyebrow text-accent">Keys</p>
+                <h2 className="t-title mt-3 text-balance">
+                  When a key changes, you find out.
+                </h2>
+                <p className="t-subtitle mt-5 text-pretty text-muted">
+                  A contact&rsquo;s key is pinned the first time you see it. If
+                  it ever changes, sending stops until you say so. It usually
+                  means they reinstalled or switched phone. It can also mean
+                  someone is standing in for them, and that is exactly the case
+                  worth interrupting you for.
+                </p>
+                <p className="mt-5 text-[15px] leading-relaxed text-muted">
+                  Compare the safety number in person or on a call you trust,
+                  or scan their QR code when you are together.
+                </p>
+              </Reveal>
+
+              {/* Not a mockup: this is the warning the app actually showed
+                  when the other side re-registered with new keys. */}
+              <Reveal delay={80} className="mx-auto w-[70%] max-w-[300px] lg:w-full lg:max-w-[340px]">
+                <Shot
+                  src="/shots/keychange.webp"
+                  alt="hoppin blocking a conversation after the contact's security code changed, offering to verify or accept."
+                />
+              </Reveal>
+            </div>
+
+            <div className="mt-24 grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+              <Reveal className="order-2 grid grid-cols-2 gap-4 lg:order-1">
+                <Shot
+                  src="/shots/privacy.webp"
+                  alt="hoppin's Privacy and Security settings: read receipts, typing indicators, direct delivery and app lock."
+                  className="translate-y-4"
+                />
+                <Shot
+                  src="/shots/settings.webp"
+                  alt="hoppin's Settings screen, with privacy, notifications, Bluetooth mesh and appearance."
+                />
+              </Reveal>
+
+              <Reveal delay={80} className="order-1 lg:order-2">
+                <p className="t-eyebrow text-accent">Settings</p>
+                <h2 className="t-title mt-3 text-balance">
+                  Every switch says what it costs.
+                </h2>
+                <p className="t-subtitle mt-5 text-pretty text-muted">
+                  Direct delivery is faster and keeps the relay out of it, and
+                  it also shows the other person roughly where you are. The app
+                  says so on the switch itself rather than in a policy you were
+                  never going to read.
+                </p>
+                <p className="mt-5 text-[15px] leading-relaxed text-muted">
+                  Read receipts, typing indicators, app lock and the Bluetooth
+                  radio are all yours to turn off, and turning them off does
+                  not quietly break anything.
+                </p>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* ================================================================
+            Transparency: what the server can and cannot see
             ================================================================ */}
         <section
           id="transparency"
-          className="scroll-mt-16 border-y border-hairline bg-surface px-5 py-24 sm:px-8 sm:py-32"
+          className="scroll-mt-16 border-y border-hairline px-5 py-24 sm:px-8 sm:py-32"
         >
           <div className="mx-auto max-w-6xl">
             <Reveal className="max-w-2xl">
@@ -317,7 +464,7 @@ export default function Home() {
             </Reveal>
 
             <div className="mt-14 grid gap-6 lg:grid-cols-2">
-              <Reveal className="rounded-3xl border border-hairline bg-background p-8 sm:p-10">
+              <Reveal className="glass edge-top relative overflow-hidden rounded-3xl p-8 sm:p-10" style={{ "--edge-color": "var(--lava-amber)" } as React.CSSProperties}>
                 <h3 className="text-[19px] font-semibold tracking-[-0.02em]">
                   It can see
                 </h3>
@@ -338,7 +485,8 @@ export default function Home() {
 
               <Reveal
                 delay={80}
-                className="rounded-3xl border border-hairline bg-background p-8 sm:p-10"
+                className="glass edge-top relative overflow-hidden rounded-3xl p-8 sm:p-10"
+                style={{ "--edge-color": "var(--lava-teal)" } as React.CSSProperties}
               >
                 <h3 className="text-[19px] font-semibold tracking-[-0.02em]">
                   It cannot see
@@ -415,7 +563,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={80}>
-              <dl className="overflow-hidden rounded-3xl border border-hairline bg-surface">
+              <dl className="glass overflow-hidden rounded-3xl">
                 {specs.map((spec) => (
                   <div
                     key={spec.label}
@@ -442,7 +590,7 @@ export default function Home() {
             ================================================================ */}
         <section
           id="download"
-          className="scroll-mt-16 border-t border-hairline bg-surface px-5 py-28 text-center sm:px-8 sm:py-36"
+          className="scroll-mt-16 border-t border-hairline px-5 py-28 text-center sm:px-8 sm:py-36"
         >
           <Reveal className="mx-auto max-w-2xl">
             <HopMark className="mx-auto h-9 w-9 text-accent" />
@@ -468,7 +616,7 @@ export default function Home() {
                 href={REPO_URL}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-hairline px-7 py-3 text-[15px] font-medium transition-colors duration-200 hover:bg-background"
+                className="glass glass-hover inline-flex cursor-pointer items-center gap-2 rounded-full px-7 py-3 text-[15px] font-medium"
               >
                 <GithubIcon className="h-[17px] w-[17px]" />
                 View on GitHub

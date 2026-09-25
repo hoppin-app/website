@@ -3,11 +3,11 @@ import Link from "next/link";
 import LegalShell from "../components/LegalShell";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — hoppin",
+  title: "Terms of Service · hoppin",
   description:
     "The rules for using hoppin: acceptable use, zero tolerance for objectionable content and abusive users, reporting, termination and disclaimers.",
   openGraph: {
-    title: "Terms of Service — hoppin",
+    title: "Terms of Service · hoppin",
     description:
       "The rules for using hoppin: acceptable use, zero tolerance for objectionable content and abusive users, reporting, termination and disclaimers.",
     url: "/terms",
@@ -20,7 +20,7 @@ export default function TermsPage() {
   return (
     <LegalShell
       title="Terms of Service"
-      intro="Short, and worth reading — especially the part about what is not allowed."
+      intro="Short, and worth reading, especially the part about what is not allowed."
     >
       <h2>1. Accepting these terms</h2>
       <p>
@@ -45,7 +45,7 @@ export default function TermsPage() {
         a number you are entitled to use. You are responsible for the security
         of your device and for what is sent from it. If you lose access to your
         number or device, your keys and your locally stored conversations cannot
-        be recovered by us — we do not hold them.
+        be recovered by us. We do not hold them.
       </p>
 
       <h2>4. Acceptable use</h2>
@@ -85,7 +85,7 @@ export default function TermsPage() {
           We have no tolerance for objectionable content or abusive behaviour on
           hoppin.
         </strong>{" "}
-        Messages are end-to-end encrypted, so we cannot proactively scan them —
+        Messages are end-to-end encrypted, so we cannot proactively scan them,
         which makes your reports the mechanism that matters. When you report a
         user, we review the report and any evidence you attach and act on it{" "}
         <strong>within 24 hours</strong>. Acting on a report may mean removing
@@ -98,11 +98,11 @@ export default function TermsPage() {
       </p>
       <ul>
         <li>
-          <strong>Block</strong> — stops a contact from reaching you at all; you
+          <strong>Block</strong> stops a contact from reaching you at all; you
           can block anyone from a conversation or from their contact entry.
         </li>
         <li>
-          <strong>Report</strong> — sends us the account and the reason, and
+          <strong>Report</strong> sends us the account and the reason, and
           optionally the messages you choose to attach as evidence.
         </li>
       </ul>

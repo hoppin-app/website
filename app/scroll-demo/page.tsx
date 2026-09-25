@@ -8,7 +8,7 @@ import ScrollVideo, { type ScrollVideoCaption } from "../components/ScrollVideo"
    real footage before using it on the landing page. */
 
 export const metadata: Metadata = {
-  title: "Scroll video demo — hoppin",
+  title: "Scroll video demo · hoppin",
   robots: { index: false, follow: false },
 };
 
@@ -28,7 +28,7 @@ export default function ScrollDemoPage() {
           <p className="text-sm font-semibold tracking-wide text-accent uppercase">Demo</p>
           <h1 className="mt-3 text-5xl font-bold tracking-tight sm:text-6xl">Scroll to play.</h1>
           <p className="mx-auto mt-5 max-w-xl text-lg text-muted">
-            180 frames extracted from a 6-second clip. Your scroll position is the playhead —
+            180 frames extracted from a 6-second clip. Your scroll position is the playhead.
             scroll back up and it plays in reverse.
           </p>
           <p className="mt-10 animate-bounce text-2xl text-muted" aria-hidden="true">↓</p>
@@ -45,7 +45,7 @@ export default function ScrollDemoPage() {
         <section className="px-6 py-32 text-center">
           <h2 className="text-4xl font-bold tracking-tight">That&rsquo;s the effect.</h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-muted">
-            Swap the frames for your own footage — a phone turning, a message flying — and it drops
+            Swap the frames for your own footage, a phone turning or a message flying, and it drops
             into the landing page as-is.
           </p>
         </section>

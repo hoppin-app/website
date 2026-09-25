@@ -65,8 +65,8 @@ export default function JoinPage() {
             <Reveal delay={120}>
               <p className="t-subtitle mx-auto mt-5 max-w-[32rem] text-balance text-muted">
                 hoppin is an end-to-end encrypted messenger for iPhone. Your
-                messages and photos stay on your device, and nobody in between —
-                including us — can read them.
+                messages and photos stay on your device, and nobody in between,
+                including us, can read them.
               </p>
             </Reveal>
 

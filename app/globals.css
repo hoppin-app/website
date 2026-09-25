@@ -2,55 +2,71 @@
 
 /* ==========================================================================
    Design tokens
-   Palette mirrors Apple's own marketing surfaces so the site reads as a
-   natural extension of the iOS app.
+
+   The palette is the app's, not a web approximation of it: the five aurora
+   colours from `BackgroundTheme.aurora` drift behind everything, and surfaces
+   are frosted glass over them, the same trick `glassListRows()` plays in the
+   app. Dark is the primary theme here because the lava backdrop is a dark
+   backdrop; the light theme is a legible fallback for anyone who asks for it.
    ========================================================================== */
 
-/* Light is the primary theme and applies to everyone, including visitors whose
-   system is set to dark. `color-scheme: light` keeps form controls, scrollbars
-   and the like light too, rather than letting the OS darken them. */
 :root {
-  color-scheme: light;
-
-  --background: #ffffff;
-  --surface: #f5f5f7;
-  --surface-raised: #ffffff;
-  --foreground: #1d1d1f;
-  --muted: #6e6e73;
-  --border: rgba(0, 0, 0, 0.09);
-  /* --accent is for text and icons, --brand for buttons (white on top).
-     They differ in the dark theme, where a legible blue text colour is too
-     light to carry white text. */
-  --accent: #0067cf;
-  --brand: #0067cf;
-  --glow: #0071e3;
-  --ios-blue: #007aff;
-  --ios-green: #34c759;
-  --ios-bubble: #e9e9eb;
-  --nav-bg: rgba(255, 255, 255, 0.72);
-  --shadow-phone: 0 50px 100px -20px rgba(0, 0, 0, 0.25);
-}
-
-/* Secondary theme: soft dark, elevated greys rather than pure black. Opt-in
-   only — set data-theme="dark" on <html> to use it. It is deliberately not
-   wired to prefers-color-scheme, so the light theme stays primary. */
-:root[data-theme="dark"] {
   color-scheme: dark;
 
-  --background: #1c1c1e;
-  --surface: #2c2c2e;
-  --surface-raised: #3a3a3c;
-  --foreground: #f5f5f7;
-  --muted: #a1a1a6;
-  --border: rgba(255, 255, 255, 0.14);
-  --accent: #6cb8ff;
-  --brand: #0a6fe0;
-  --glow: #0a84ff;
+  /* The base the blobs sit on. Matches LavaBackground.swift's dark base. */
+  --background: #0a0817;
+
+  /* Surfaces are translucent, so they pick up whatever colour drifts behind. */
+  --surface: rgba(255, 255, 255, 0.055);
+  --surface-raised: rgba(255, 255, 255, 0.085);
+  --glass-blur: 22px;
+
+  --foreground: #f6f5fb;
+  --muted: rgba(246, 245, 251, 0.74);
+  --border: rgba(255, 255, 255, 0.11);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* --accent carries text and icons; --brand carries white text on a fill. */
+  --accent: #c3b0ff;
+  --brand: #6d3fe0;
+  --brand-hover: #7d52ea;
+  --glow: #5c29d9;
+
+  /* The aurora five, available to any component that wants one. */
+  --lava-violet: #5c29d9;
+  --lava-pink: #e6338c;
+  --lava-amber: #fa7324;
+  --lava-blue: #1473f2;
+  --lava-teal: #1abfb3;
+
   --ios-blue: #0a84ff;
   --ios-green: #30d158;
-  --ios-bubble: #3a3a3c;
-  --nav-bg: rgba(28, 28, 30, 0.72);
-  --shadow-phone: 0 50px 100px -20px rgba(0, 0, 0, 0.55);
+  --ios-bubble: rgba(255, 255, 255, 0.13);
+  --nav-bg: rgba(10, 8, 23, 0.6);
+  --shadow-phone: 0 60px 120px -30px rgba(0, 0, 0, 0.75);
+}
+
+/* Opt-in light theme: the same colours washed out to pastels, exactly as the
+   app lightens its palette in light mode. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --background: #f6f5fb;
+  --surface: rgba(255, 255, 255, 0.55);
+  --surface-raised: rgba(255, 255, 255, 0.78);
+
+  --foreground: #16121f;
+  --muted: rgba(22, 18, 31, 0.62);
+  --border: rgba(22, 18, 31, 0.1);
+  --border-strong: rgba(22, 18, 31, 0.16);
+
+  --accent: #5b21c6;
+  --brand: #5b21c6;
+  --brand-hover: #6d31d8;
+
+  --ios-bubble: rgba(22, 18, 31, 0.08);
+  --nav-bg: rgba(246, 245, 251, 0.6);
+  --shadow-phone: 0 50px 100px -20px rgba(22, 18, 31, 0.3);
 }
 
 @theme inline {
@@ -65,6 +81,13 @@
   --color-ios-blue: var(--ios-blue);
   --color-ios-green: var(--ios-green);
   --color-ios-bubble: var(--ios-bubble);
+  --color-surface-raised: var(--surface-raised);
+  --color-hairline-strong: var(--border-strong);
+  --color-lava-violet: var(--lava-violet);
+  --color-lava-pink: var(--lava-pink);
+  --color-lava-amber: var(--lava-amber);
+  --color-lava-blue: var(--lava-blue);
+  --color-lava-teal: var(--lava-teal);
 
   --font-sans: var(--font-display);
   --font-mono: var(--font-geist-mono);
@@ -104,6 +127,130 @@ body {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
+}
+
+/* ==========================================================================
+   Lava backdrop
+   Five blobs on slow, mismatched Lissajous paths behind one big blur. The
+   periods are deliberately coprime-ish so the field never visibly repeats.
+   ========================================================================== */
+
+.lava {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  background: var(--background);
+  pointer-events: none;
+  /* One blur for the whole field: blurring each blob separately costs five
+     times as much and looks the same once they overlap. */
+  filter: blur(72px) saturate(125%);
+}
+
+.lava-blob {
+  position: absolute;
+  width: var(--blob-size);
+  height: calc(var(--blob-size) * 1.1);
+  margin-left: calc(var(--blob-size) / -2);
+  margin-top: calc(var(--blob-size) * -0.55);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    var(--blob-color) 0%,
+    color-mix(in srgb, var(--blob-color) 55%, transparent) 55%,
+    transparent 72%
+  );
+  opacity: 0.72;
+  will-change: transform;
+  animation: lava-drift-0 var(--blob-duration) ease-in-out infinite alternate;
+  animation-delay: var(--blob-delay);
+}
+
+/* Three paths rather than one, so neighbouring blobs separate and merge
+   instead of sliding in formation. */
+.lava-blob-1 { animation-name: lava-drift-1; }
+.lava-blob-2 { animation-name: lava-drift-2; }
+
+@keyframes lava-drift-0 {
+  from { transform: translate3d(-18%, -12%, 0) scale(1); }
+  to   { transform: translate3d(16%, 14%, 0) scale(1.14); }
+}
+
+@keyframes lava-drift-1 {
+  from { transform: translate3d(14%, -16%, 0) scale(1.1); }
+  to   { transform: translate3d(-15%, 12%, 0) scale(0.92); }
+}
+
+@keyframes lava-drift-2 {
+  from { transform: translate3d(-10%, 15%, 0) scale(0.95); }
+  to   { transform: translate3d(18%, -13%, 0) scale(1.18); }
+}
+
+/* A wash over the colour so text stays readable wherever a blob drifts. */
+.lava-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.36);
+}
+
+:root[data-theme="light"] .lava-blob { opacity: 0.4; }
+:root[data-theme="light"] .lava-scrim { background: rgba(255, 255, 255, 0.45); }
+
+/* Keep the colour, drop the movement. */
+@media (prefers-reduced-motion: reduce) {
+  .lava-blob { animation-play-state: paused; }
+}
+
+/* ==========================================================================
+   Frosted surfaces
+   The app puts `.ultraThinMaterial` behind list rows over the same backdrop;
+   `.glass` is that, for the web.
+   ========================================================================== */
+
+.glass {
+  background: var(--surface);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border: 1px solid var(--border);
+}
+
+.glass-raised {
+  background: var(--surface-raised);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border: 1px solid var(--border-strong);
+}
+
+/* Cards lift very slightly on hover. Transform only, so nothing reflows. */
+.glass-hover {
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 260ms ease, background-color 260ms ease;
+}
+
+.glass-hover:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  background: var(--surface-raised);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-hover:hover { transform: none; }
+}
+
+/* A hairline of colour along the top edge of a card, taken from the blob
+   palette, so the bento grid is not five identical grey rectangles. */
+.edge-top::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--edge-color, var(--lava-violet)),
+    transparent
+  );
+  opacity: 0.85;
 }
 
 /* ==========================================================================

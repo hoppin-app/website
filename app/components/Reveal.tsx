@@ -8,6 +8,8 @@ type RevealProps = {
   delay?: number;
   className?: string;
   as?: "div" | "section" | "li" | "article";
+  /** Merged with the transition delay, for per-card custom properties. */
+  style?: React.CSSProperties;
 };
 
 /**
@@ -22,6 +24,7 @@ export default function Reveal({
   delay = 0,
   className = "",
   as: Tag = "div",
+  style,
 }: RevealProps) {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -56,7 +59,7 @@ export default function Reveal({
     <Tag
       ref={attach}
       className={`reveal ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ ...style, transitionDelay: `${delay}ms` }}
     >
       {children}
     </Tag>

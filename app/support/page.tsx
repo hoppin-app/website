@@ -3,11 +3,11 @@ import Link from "next/link";
 import LegalShell from "../components/LegalShell";
 
 export const metadata: Metadata = {
-  title: "Support — hoppin",
+  title: "Support · hoppin",
   description:
     "How to get help with hoppin: verification, safety numbers, blocking and reporting, app lock, deleting your account, and how to reach us.",
   openGraph: {
-    title: "Support — hoppin",
+    title: "Support · hoppin",
     description:
       "How to get help with hoppin: verification, safety numbers, blocking and reporting, app lock, deleting your account, and how to reach us.",
     url: "/support",
@@ -26,7 +26,7 @@ export default function SupportPage() {
       <h2>Contact us</h2>
       <p>
         Email <strong>[contact email]</strong>. Include your iOS version and
-        what you were doing when the problem happened — but never include your
+        what you were doing when the problem happened, but never include your
         message content, and never send us a password or recovery code from any
         service. We aim to reply within a few working days.
       </p>
@@ -65,15 +65,15 @@ export default function SupportPage() {
       <h3>What is a safety number?</h3>
       <p>
         Each conversation has a 60-digit safety number derived from both
-        people&rsquo;s keys. If it matches on both phones — read it out, or scan
-        the other person&rsquo;s QR code when you are together — nobody is
+        people&rsquo;s keys. If it matches on both phones, whether you read it out
+        or scan the other person&rsquo;s QR code when you are together, nobody is
         sitting between you. Marking a contact as verified records that you
         checked.
       </p>
 
       <h3>hoppin says a contact&rsquo;s key changed</h3>
       <p>
-        That happens when they reinstall the app or move to a new device — and
+        That happens when they reinstall the app or move to a new device, and
         it is also what an impersonation attempt would look like. hoppin blocks
         sending until you acknowledge the change. Confirm with the person over a
         channel you trust, or compare safety numbers again, before you continue.
@@ -114,7 +114,7 @@ export default function SupportPage() {
         Settings → Delete Account removes your registration, your certificate
         and any queued messages from the server, and wipes your keys and
         conversations from the device. It cannot be undone and nothing can be
-        restored afterwards — we hold no backup of it.
+        restored afterwards. We hold no backup of it.
       </p>
 
       <h3>Can I recover my messages on a new phone?</h3>
@@ -126,11 +126,11 @@ export default function SupportPage() {
       <h2>Also useful</h2>
       <ul>
         <li>
-          <Link href="/privacy">Privacy policy</Link> — what is processed, for
+          <Link href="/privacy">Privacy policy</Link>: what is processed, for
           how long, and how to have it deleted.
         </li>
         <li>
-          <Link href="/terms">Terms of service</Link> — acceptable use and our
+          <Link href="/terms">Terms of service</Link>: acceptable use and our
           zero-tolerance rule for abuse.
         </li>
       </ul>

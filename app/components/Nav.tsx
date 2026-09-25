@@ -7,8 +7,9 @@ import { HopMark } from "./HopMark";
 /* Hrefs are root-relative so the same nav works from /privacy, /terms and
    the other standalone pages, not only from the home page. */
 const links = [
+  { href: "/#routes", label: "How it travels" },
   { href: "/#features", label: "Features" },
-  { href: "/#how", label: "How it works" },
+  { href: "/#keys", label: "Keys" },
   { href: "/#transparency", label: "Transparency" },
   { href: "/#security", label: "Security" },
 ];
