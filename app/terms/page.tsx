@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LegalShell from "../components/LegalShell";
+import ContactEmail from "../components/ContactEmail";
+import { OPERATOR } from "../site";
 
 export const metadata: Metadata = {
   title: "Terms of Service · hoppin",
@@ -25,7 +27,7 @@ export default function TermsPage() {
       <h2>1. Accepting these terms</h2>
       <p>
         These terms are an agreement between you and{" "}
-        <strong>[Company/Developer legal name]</strong> (&ldquo;we&rdquo;,
+        <strong>{OPERATOR}</strong> (&ldquo;we&rdquo;,
         &ldquo;us&rdquo;) covering your use of the hoppin app and this website.
         By verifying your phone number and using hoppin, you accept them. If
         you do not accept them, do not use hoppin.
@@ -98,11 +100,11 @@ export default function TermsPage() {
       </p>
       <ul>
         <li>
-          <strong>Block</strong> stops a contact from reaching you at all; you
+          <strong>Block</strong>{" "}stops a contact from reaching you at all; you
           can block anyone from a conversation or from their contact entry.
         </li>
         <li>
-          <strong>Report</strong> sends us the account and the reason, and
+          <strong>Report</strong>{" "}sends us the account and the reason, and
           optionally the messages you choose to attach as evidence.
         </li>
       </ul>
@@ -123,12 +125,12 @@ export default function TermsPage() {
         you breach these terms, if we are required to by law, or if your use
         endangers the service or other users. You may stop using hoppin at any
         time and can remove your account and your data from our server using{" "}
-        <strong>Delete Account</strong> in the app&rsquo;s settings.
+        <strong>Delete Account</strong>{" "}in the app&rsquo;s settings.
       </p>
 
       <h2>8. The service as it is</h2>
       <p>
-        hoppin is provided <strong>&ldquo;as is&rdquo;</strong> and{" "}
+        hoppin is provided <strong>&ldquo;as is&rdquo;</strong>{" "}and{" "}
         <strong>&ldquo;as available&rdquo;</strong>, without warranties of any
         kind, whether express or implied, including any implied warranties of
         merchantability, fitness for a particular purpose, or
@@ -159,18 +161,17 @@ export default function TermsPage() {
 
       <h2>11. Governing law</h2>
       <p>
-        These terms are governed by the laws of{" "}
-        <strong>[To be confirmed]</strong>, and the courts of{" "}
-        <strong>[To be confirmed]</strong> have exclusive jurisdiction, without
-        affecting any mandatory protections available to you as a consumer in
-        your country of residence.
+        These terms are governed by the laws of <strong>Portugal</strong>, and
+        the <strong>Portuguese courts</strong>{" "}have jurisdiction over any
+        dispute about them. This doesn&rsquo;t take away any protection you
+        have as a consumer under the law of the country where you live.
       </p>
 
       <h2>12. Contact</h2>
       <p>
-        Reach us at <strong>[contact email]</strong> or through the{" "}
+        Reach us at <ContactEmail />{" "}or through the{" "}
         <Link href="/support">support page</Link>. Our{" "}
-        <Link href="/privacy">privacy policy</Link> explains what data is
+        <Link href="/privacy">privacy policy</Link>{" "}explains what data is
         involved in all of this.
       </p>
     </LegalShell>

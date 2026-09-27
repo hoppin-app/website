@@ -1,8 +1,6 @@
 import Nav from "./Nav";
 import SiteFooter from "./SiteFooter";
-
-/** Single source of truth for the date shown on the legal pages. */
-export const LAST_UPDATED = "16 September 2026";
+import { LAST_UPDATED } from "../site";
 
 /**
  * Shared chrome for the standalone text pages (privacy, terms, support, join).
