@@ -28,8 +28,8 @@ export type SceneStage = {
   link?: { href: string; label: string; external?: boolean };
 };
 
-/** Scroll given to each stage after the first. */
-const STAGE_VH = 80;
+/** Scroll given to each stage after the first: a short swipe per stage. */
+const STAGE_VH = 45;
 
 export default function Scene({
   id,

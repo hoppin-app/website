@@ -45,6 +45,11 @@ export function usePrefersReducedMotion() {
   );
 }
 
+/** The pre-blurred glow that goes behind a screenshot (scripts/make-glows.py). */
+export function glowFor(screen: string) {
+  return screen.replace("/shots/", "/shots/glow-");
+}
+
 export function useStoryMotion() {
   const reduce = usePrefersReducedMotion();
   const ease: Transition = reduce ? { duration: 0 } : { duration: 0.55, ease: [0.16, 1, 0.3, 1] };
@@ -121,7 +126,7 @@ export function PhoneVisual({
             transition={ease}
             className="absolute inset-0"
           >
-            <Image src={src} alt="" width={161} height={350} className="device-glow h-full w-[136%]" />
+            <Image src={glowFor(src)} alt="" width={168} height={217} unoptimized className="device-glow" />
           </motion.div>
         ))}
       </div>

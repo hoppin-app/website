@@ -32,7 +32,7 @@ import { useStoryMotion } from "./StoryParts";
 
 export function FeaturesChapter() {
   return (
-    <section id="features" aria-labelledby="features-title" className="px-5 py-20 sm:px-8 sm:py-36">
+    <section id="features" aria-labelledby="features-title" className="px-5 py-16 sm:px-8 sm:py-36">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <p className="t-eyebrow">Features</p>

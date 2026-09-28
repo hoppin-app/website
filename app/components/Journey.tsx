@@ -22,7 +22,7 @@ import {
   type Icon,
 } from "@phosphor-icons/react";
 import AppStoreLink from "./AppStoreLink";
-import { Chip, StatusCard, useIsDesktop, usePrefersReducedMotion } from "./StoryParts";
+import { Chip, StatusCard, glowFor, useIsDesktop, usePrefersReducedMotion } from "./StoryParts";
 
 /* ==========================================================================
    The journey of one message
@@ -120,10 +120,11 @@ const SCREEN_ALT: Record<string, string> = {
     "hoppin’s chat list, with the conversation with Ana Ribeiro at the top.",
 };
 
-/* Each stage after the first gets 85vh of scrolling. Tailwind needs literal
-   class names, so the track heights and #routes offsets below are written out:
-   4 x 85 = 340vh on desktop, 3 x 85 = 255vh on phones (where the intro is an
-   ordinary hero above the scene). Change them together. */
+/* Each stage after the first gets 45vh of scrolling: a short swipe moves the
+   story on by one road. Tailwind needs literal class names, so the track
+   heights and #routes offsets below are written out: 4 x 45 = 180vh on
+   desktop, 3 x 45 = 135vh on phones (where the intro is an ordinary hero above
+   the scene). Change them together. */
 
 export default function Journey() {
   const track = useRef<HTMLDivElement>(null);
@@ -211,15 +212,16 @@ export default function Journey() {
       <div
         id="journey-track"
         ref={track}
-        className="relative h-[calc(100dvh+255vh)] lg:h-[calc(100dvh+340vh)]"
+        className="relative h-[calc(100dvh+135vh)] lg:h-[calc(100dvh+180vh)]"
       >
         {/* Where "How it travels" (/#routes) lands: the scroll position that
-            opens the first road, not the hero. 0.3 of the travel is inside
-            stage 1 of 5; the travel is (stages - 1) x STAGE_VH. */}
+            opens the first road, not the hero. On desktop 0.3 of the travel
+            is inside stage 1 of 5; on phones 0.125 is inside stage 1 of 4.
+            The travel is (stages - 1) x 45vh. */}
         <div
           id="routes"
           aria-hidden
-          className="pointer-events-none absolute left-0 top-[32vh] h-px w-px lg:top-[102vh]"
+          className="pointer-events-none absolute left-0 top-[17vh] h-px w-px lg:top-[54vh]"
         />
 
         <div className="sticky top-0 flex h-[100dvh] flex-col overflow-hidden">
@@ -271,7 +273,7 @@ export default function Journey() {
                       transition={ease}
                       className="absolute inset-0"
                     >
-                      <Image src={src} alt="" width={161} height={350} className="device-glow h-full w-[136%]" />
+                      <Image src={glowFor(src)} alt="" width={168} height={217} unoptimized className="device-glow" />
                     </motion.div>
                   ))}
                 </div>

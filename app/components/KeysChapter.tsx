@@ -72,8 +72,8 @@ export function KeysChapter() {
   const groups = state === "verified" ? BEFORE : AFTER;
 
   return (
-    <section id="keys" aria-labelledby="keys-title" className="px-5 py-28 sm:px-8 sm:py-36">
-      <div className="mx-auto grid max-w-6xl items-start gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+    <section id="keys" aria-labelledby="keys-title" className="px-5 py-16 sm:px-8 sm:py-36">
+      <div className="mx-auto grid max-w-6xl items-start gap-10 sm:gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <Reveal>
           <p className="t-eyebrow">Keys</p>
           <h2 id="keys-title" className="t-title mt-3 max-w-[14ch] text-balance">

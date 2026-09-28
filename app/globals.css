@@ -454,12 +454,21 @@ body {
 
 /* The screenshot's own colours, blurred into a halo behind the phone. It is
    the only place the app's aurora touches the page, and it changes with the
-   screen. Lives inside a pinned element, never a scrolling one. */
+   screen. Lives inside a pinned element, never a scrolling one.
+
+   The blur is baked into the image (scripts/make-glows.py) rather than done
+   with filter: blur(), which Safari clipped to the image's own box on first
+   paint: a pale rectangle sat behind the phone until the first scroll. The
+   image carries its soft edge inside it, so its box reaches well past the
+   phone on every side; the numbers are the ones the script prints. */
 .device-glow {
   position: absolute;
-  inset: 8% -18% 4%;
+  left: -90%;
+  top: -25.12%;
+  width: 280%;
+  max-width: none;
+  height: 166.24%;
   z-index: -1;
-  filter: blur(64px) saturate(1.25);
   opacity: var(--glow-opacity);
   pointer-events: none;
 }

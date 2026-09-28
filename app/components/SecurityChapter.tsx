@@ -124,7 +124,7 @@ export function SecurityChapter() {
       aria-labelledby="security-title"
       // Extra room at the bottom: the footer is uncovered the moment the page
       // runs out, so the demo needs space below it to be read in full.
-      className="px-5 pb-44 pt-20 sm:px-8 sm:pb-52 sm:pt-36"
+      className="px-5 pb-44 pt-16 sm:px-8 sm:pb-52 sm:pt-36"
     >
       <div className="mx-auto grid max-w-6xl items-start gap-10 sm:gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <Reveal>
