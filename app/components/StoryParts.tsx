@@ -92,7 +92,8 @@ export type PhoneStage = {
  * The Journey's phone, reusable: every screen is mounted once and crossfaded,
  * the halo behind the phone follows the screen, and each stage's card slides
  * in from the left while its chip settles in on the right. `overlay` is drawn
- * on top for scenes that need more than one card.
+ * on top for scenes that need more than one card. Put it in a `.device-slot`:
+ * on phones its height follows that slot's.
  */
 export function PhoneVisual({
   stages,
@@ -110,7 +111,7 @@ export function PhoneVisual({
   const current = stages[active]?.screen;
 
   return (
-    <div className="relative h-[calc(100%-0.5rem)] max-h-[480px] lg:h-[min(72dvh,680px)] lg:max-h-none">
+    <div className="device-frame">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         {screens.map((src) => (
           <motion.div
@@ -125,7 +126,7 @@ export function PhoneVisual({
         ))}
       </div>
 
-      <div className="device h-full">
+      <div className="device h-full w-full">
         <div className="device-screen">
           {screens.map((src) => (
             <motion.div

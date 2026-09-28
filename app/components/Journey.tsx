@@ -256,10 +256,10 @@ export default function Journey() {
             </div>
 
             {/* ---------------- Phone, halo and floating cards ------------- */}
-            <div className="relative order-1 flex h-full min-h-0 items-center justify-center lg:order-2">
+            <div className="device-slot relative order-1 flex h-full min-h-0 items-center justify-center lg:order-2">
               <motion.div
                 style={reduce ? undefined : { scale: phoneScale, y: phoneY }}
-                className="relative h-[calc(100%-0.5rem)] max-h-[480px] lg:h-[min(72dvh,680px)] lg:max-h-none"
+                className="device-frame"
               >
                 {/* Halo: each screen blurred behind the phone, crossfaded. */}
                 <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -276,7 +276,7 @@ export default function Journey() {
                   ))}
                 </div>
 
-                <div className="device h-full">
+                <div className="device h-full w-full">
                   <div className="device-screen">
                     {SCREENS.map((src, i) => (
                       <motion.div

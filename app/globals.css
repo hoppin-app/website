@@ -406,6 +406,32 @@ body {
    own status bar and Dynamic Island, so nothing is drawn on top of it.
    ========================================================================== */
 
+/* The box the phone, its halo and its cards hang off, with its width and
+   height written out. Left to shrink-wrap the phone, its width came from the
+   phone's aspect ratio and percentage height, which Safari's first layout
+   reads as zero: the phone started at the middle of the screen and the
+   notification hung off the left edge. On phones the height follows the slot
+   the frame sits in (cqh), so the slot is a size container. The 644 / 1400 is
+   .device's aspect ratio. */
+.device-slot {
+  container-type: size;
+}
+
+.device-frame {
+  --device-h: min(480px, 100cqh - 0.5rem);
+  position: relative;
+  flex: none;
+  height: var(--device-h);
+  width: calc(var(--device-h) * 644 / 1400);
+}
+
+/* Tailwind's lg, where the scene turns into two columns. */
+@media (min-width: 64rem) {
+  .device-frame {
+    --device-h: min(72dvh, 680px);
+  }
+}
+
 .device {
   position: relative;
   aspect-ratio: 644 / 1400;
