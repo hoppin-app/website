@@ -184,7 +184,7 @@ export default function Journey() {
           className="btn btn-quiet group"
           tabIndex={focusable ? 0 : -1}
         >
-          How it travels
+          <span className="sweep-underline">How it travels</span>
           <ArrowDownIcon className="nudge-down h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
         </button>
       </div>
