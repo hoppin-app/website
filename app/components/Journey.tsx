@@ -22,6 +22,7 @@ import {
   WifiSlashIcon,
   type Icon,
 } from "@phosphor-icons/react";
+import AppStoreLink from "./AppStoreLink";
 import { Chip, StatusCard, useIsDesktop } from "./StoryParts";
 
 /* ==========================================================================
@@ -173,10 +174,10 @@ export default function Journey() {
         {STAGES[0].body}
       </p>
       <div className="mt-7 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
-        <a href="#download" className="btn btn-ink" tabIndex={focusable ? 0 : -1}>
+        <AppStoreLink className="btn btn-ink" tabIndex={focusable ? 0 : -1}>
           <AppleLogoIcon weight="fill" className="h-[18px] w-[18px]" />
           Get hoppin
-        </a>
+        </AppStoreLink>
         <button
           type="button"
           onClick={() => scrollToStage(1)}

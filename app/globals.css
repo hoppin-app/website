@@ -32,6 +32,10 @@
   --accent: #5a3fcf;
   --accent-soft: rgba(90, 63, 207, 0.1);
 
+  /* Only for a warning the app itself would show (a changed security code). */
+  --warn: #b25a06;
+  --warn-soft: rgba(217, 119, 6, 0.12);
+
   /* Primary buttons are ink, not violet: that is what keeps the accent rare. */
   --ink: #121216;
   --on-ink: #ffffff;
@@ -63,6 +67,9 @@
     --accent: #ab9cff;
     --accent-soft: rgba(171, 156, 255, 0.12);
 
+    --warn: #f5b04a;
+    --warn-soft: rgba(245, 176, 74, 0.14);
+
     --ink: #f2f2f5;
     --on-ink: #131318;
 
@@ -91,6 +98,9 @@
   --accent: #ab9cff;
   --accent-soft: rgba(171, 156, 255, 0.12);
 
+  --warn: #f5b04a;
+  --warn-soft: rgba(245, 176, 74, 0.14);
+
   --ink: #f2f2f5;
   --on-ink: #131318;
 
@@ -113,6 +123,8 @@
   --color-hairline-strong: var(--border-strong);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
   --color-ink: var(--ink);
   --color-on-ink: var(--on-ink);
 
@@ -224,6 +236,18 @@ body {
 }
 
 .btn-ink:hover {
+  opacity: 0.86;
+}
+
+/* The ink button turned over, for use on an ink surface (the footer). */
+.btn-on-ink {
+  background: var(--on-ink);
+  color: var(--ink);
+  padding: 0.95rem 1.75rem;
+  font-size: 16px;
+}
+
+.btn-on-ink:hover {
   opacity: 0.86;
 }
 
@@ -417,5 +441,70 @@ body {
 @media (prefers-reduced-transparency: reduce) {
   .device-glow {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   Top bar: a full-width row at the top of the page, a floating pill once
+   scrolled. Nav.tsx flips data-floating; everything else is a transition
+   between the two shapes, on one easing, so it reads as a single morph.
+   ========================================================================== */
+
+.nav-pill {
+  --nav-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  height: 64px;
+  max-width: 72rem;
+  margin-top: 0;
+  padding: 0 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+  transition:
+    max-width 0.6s var(--nav-ease),
+    height 0.6s var(--nav-ease),
+    margin-top 0.6s var(--nav-ease),
+    padding 0.6s var(--nav-ease),
+    background-color 0.45s ease,
+    border-color 0.45s ease,
+    box-shadow 0.6s var(--nav-ease);
+}
+
+@media (min-width: 640px) {
+  .nav-pill {
+    padding: 0 0.75rem;
+  }
+}
+
+.nav-pill[data-floating="true"] {
+  height: 52px;
+  max-width: 25rem;
+  margin-top: 0.75rem;
+  padding: 0 0.375rem 0 1.125rem;
+  background: var(--nav-bg);
+  border-color: var(--border);
+  box-shadow: var(--shadow-card);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-pill {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Footer reveal (home page): the page sits above the footer and scrolls away
+   to uncover it, the footer pinned to the bottom of the screen underneath.
+   Only where the footer fits on screen: taller than the viewport, its top
+   would stay hidden under the page for good.
+   ========================================================================== */
+
+@media (min-height: 40rem) {
+  .footer-reveal {
+    position: sticky;
+    bottom: 0;
+    z-index: 0;
   }
 }

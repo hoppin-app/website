@@ -20,7 +20,20 @@ function subscribe(onChange: () => void) {
 
 const readTheme = (): Theme => (document.documentElement.dataset.theme === "dark" ? "dark" : "light");
 
-export default function ThemeToggle({ className = "" }: { className?: string }) {
+const LOOKS = {
+  /** A button of its own, floating over the page. */
+  floating: "h-10 w-10 border border-hairline bg-[var(--nav-bg)] backdrop-blur-xl hover:text-accent",
+  /** Inside a bar that already has a background. */
+  plain: "h-9 w-9 hover:bg-surface-sunken",
+};
+
+export default function ThemeToggle({
+  className = "",
+  look = "floating",
+}: {
+  className?: string;
+  look?: keyof typeof LOOKS;
+}) {
   const theme = useSyncExternalStore(subscribe, readTheme, (): Theme => "light");
   const reduce = useReducedMotion();
   const next: Theme = theme === "dark" ? "light" : "dark";
@@ -40,7 +53,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
       onClick={toggle}
       aria-label={next === "dark" ? "Switch to dark mode" : "Switch to light mode"}
       title={next === "dark" ? "Dark mode" : "Light mode"}
-      className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-hairline bg-[var(--nav-bg)] text-foreground backdrop-blur-xl transition-colors duration-200 hover:text-accent ${className}`}
+      className={`flex cursor-pointer items-center justify-center rounded-full text-foreground transition-colors duration-200 ${LOOKS[look]} ${className}`}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span

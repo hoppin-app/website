@@ -9,19 +9,18 @@ import {
   useScroll,
   useSpring,
 } from "motion/react";
-import { HopMark } from "./HopMark";
-import ThemeToggle from "./ThemeToggle";
 
 export type Chapter = { id: string; label: string };
 
 /**
- * The home page's navigation: a timeline down the right edge instead of a bar
- * across the top. Each chapter is a dot; the line between them fills as you
- * read, so it reaches a dot exactly as that chapter starts. The logo and the
- * theme switch sit in the top corners.
+ * The home page's chapter navigation: a timeline down the right edge. Each
+ * chapter is a dot; the line between them fills as you read, so it reaches a
+ * dot exactly as that chapter starts.
  *
- * Desktop shows the labels (on hover between 1024 and 1280px, where there
- * isn't room to keep them out); phones get the line and dots alone.
+ * It floats over the page's right margin rather than taking room from it, so
+ * the story stays centred. The labels stay out from 1536px, where the margin
+ * is wide enough to hold them; narrower desktops show them on hover, and
+ * phones get the line and dots alone.
  */
 export default function Timeline({ chapters }: { chapters: Chapter[] }) {
   const [active, setActive] = useState(0);
@@ -85,17 +84,6 @@ export default function Timeline({ chapters }: { chapters: Chapter[] }) {
 
   return (
     <>
-      {/* ---------------- Corners ---------------- */}
-      <a
-        href="#top"
-        onClick={(e) => go(e, 0)}
-        className="fixed left-4 top-4 z-40 flex h-10 items-center gap-2 rounded-full border border-hairline bg-[var(--nav-bg)] pl-3 pr-3.5 text-[15px] font-semibold tracking-[-0.02em] backdrop-blur-xl sm:left-6 sm:top-5"
-      >
-        <HopMark className="h-[18px] w-[18px] text-accent" />
-        hoppin
-      </a>
-      <ThemeToggle className="fixed right-4 top-4 z-40 sm:right-6 sm:top-5" />
-
       {/* ---------------- Desktop: labelled timeline ---------------- */}
       <nav
         aria-label="Chapters"
@@ -120,7 +108,7 @@ export default function Timeline({ chapters }: { chapters: Chapter[] }) {
                   className="flex h-6 items-center justify-end gap-3"
                 >
                   <span
-                    className={`whitespace-nowrap rounded-full px-2 py-0.5 text-[12.5px] tracking-[-0.01em] transition-[opacity,color] duration-300 max-xl:bg-[var(--nav-bg)] max-xl:opacity-0 max-xl:backdrop-blur-xl group-hover:opacity-100 group-focus-within:opacity-100 ${
+                    className={`whitespace-nowrap rounded-full px-2 py-0.5 text-[12.5px] tracking-[-0.01em] transition-[opacity,color] duration-300 max-2xl:bg-[var(--nav-bg)] max-2xl:opacity-0 max-2xl:backdrop-blur-xl group-hover:opacity-100 group-focus-within:opacity-100 ${
                       current ? "font-medium text-foreground" : "text-muted hover:text-foreground"
                     }`}
                   >

@@ -8,6 +8,7 @@ import {
   LockSimpleIcon,
   PathIcon,
 } from "@phosphor-icons/react/ssr";
+import AppStoreLink from "../components/AppStoreLink";
 import Nav from "../components/Nav";
 import Reveal from "../components/Reveal";
 import SiteFooter, { REPO_URL } from "../components/SiteFooter";
@@ -50,7 +51,7 @@ export default function JoinPage() {
       <Nav />
 
       <main id="main" className="flex-1">
-        <section className="px-5 pb-8 pt-16 sm:px-8 sm:pt-24">
+        <section className="px-5 pb-8 pt-28 sm:px-8 sm:pt-36">
           <div className="mx-auto max-w-2xl text-center">
             <Reveal>
               <Image
@@ -78,10 +79,10 @@ export default function JoinPage() {
 
             <Reveal delay={180}>
               <div className="mt-9 flex flex-col items-center justify-center gap-2 sm:flex-row">
-                <span role="link" aria-disabled="true" className="btn btn-ink">
+                <AppStoreLink className="btn btn-ink">
                   <AppleLogoIcon weight="fill" className="h-[18px] w-[18px]" />
                   Coming soon to the App Store
-                </span>
+                </AppStoreLink>
                 <a href={REPO_URL} target="_blank" rel="noreferrer noopener" className="btn btn-quiet">
                   <GithubLogoIcon className="h-[18px] w-[18px]" />
                   Read the source

@@ -21,7 +21,8 @@ export default function LegalShell({
     <>
       <Nav />
 
-      <main id="main" className="flex-1 px-5 pb-28 pt-14 sm:px-8 sm:pt-20">
+      {/* The bar is fixed, so the page starts below its 64px. */}
+      <main id="main" className="flex-1 px-5 pb-28 pt-28 sm:px-8 sm:pt-36">
         <div className="mx-auto max-w-3xl">
           <h1 className="t-title text-balance">{title}</h1>
 
