@@ -119,24 +119,34 @@ export function SecurityChapter() {
   };
 
   return (
-    <section id="security" aria-labelledby="security-title" className="px-5 py-28 sm:px-8 sm:py-36">
-      <div className="mx-auto grid max-w-6xl items-start gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+    <section
+      id="security"
+      aria-labelledby="security-title"
+      // Extra room at the bottom: the footer is uncovered the moment the page
+      // runs out, so the demo needs space below it to be read in full.
+      className="px-5 pb-44 pt-20 sm:px-8 sm:pb-52 sm:pt-36"
+    >
+      <div className="mx-auto grid max-w-6xl items-start gap-10 sm:gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <Reveal>
           <p className="t-eyebrow">Security</p>
           <h2 id="security-title" className="t-title mt-3 max-w-[14ch] text-balance">
             Encrypted all the way, and open.
           </h2>
-          <p className="t-lead mt-5 max-w-[42ch] text-pretty">
+          <p className="t-lead mt-4 max-w-[42ch] text-pretty max-sm:!text-[15.5px] sm:mt-5">
             No invented ciphers: hoppin uses Apple’s CryptoKit and algorithms anyone can look up.
             Every message is sealed and signed, and one that fails a check is dropped, never shown.
             Nothing is ever sent unencrypted, not even as a fallback.
           </p>
 
-          <dl className="mt-8 max-w-[440px] divide-y divide-[var(--border)] border-y border-hairline">
+          {/* A two-column grid on phones; the ruled list from sm up. */}
+          <dl className="mt-6 grid max-w-[440px] grid-cols-2 gap-x-6 gap-y-3 border-y border-hairline py-4 sm:mt-8 sm:grid-cols-1 sm:gap-0 sm:divide-y sm:divide-[var(--border)] sm:py-0">
             {SPECS.map((spec) => (
-              <div key={spec.label} className="flex items-baseline justify-between gap-4 py-2.5">
-                <dt className="text-[14px] text-muted">{spec.label}</dt>
-                <dd className="font-mono text-[14px] font-medium tracking-[-0.01em]">{spec.value}</dd>
+              <div
+                key={spec.label}
+                className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4 sm:py-2.5"
+              >
+                <dt className="text-[12.5px] text-muted sm:text-[14px]">{spec.label}</dt>
+                <dd className="font-mono text-[13.5px] font-medium tracking-[-0.01em] sm:text-[14px]">{spec.value}</dd>
               </div>
             ))}
           </dl>
@@ -145,7 +155,7 @@ export function SecurityChapter() {
             href={REPO_URL}
             target="_blank"
             rel="noreferrer noopener"
-            className="group mt-7 inline-flex items-center gap-1.5 text-[15px] font-medium text-accent"
+            className="group mt-5 inline-flex items-center gap-1.5 text-[15px] font-medium text-accent sm:mt-7"
           >
             Read the source
             <ArrowUpRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -153,7 +163,7 @@ export function SecurityChapter() {
         </Reveal>
 
         <Reveal delay={80} className="[overflow-anchor:none]">
-          <div className="card mx-auto w-full max-w-[500px] rounded-[1.75rem] p-5 sm:p-6">
+          <div className="card mx-auto w-full max-w-[500px] rounded-[1.5rem] p-4 sm:rounded-[1.75rem] sm:p-6">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-[15px] font-semibold tracking-[-0.01em]">Seal a message</p>
               <span className="flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-1 text-[12px] font-medium text-accent">
@@ -169,10 +179,10 @@ export function SecurityChapter() {
               </p>
             ) : (
               <>
-                <label htmlFor="seal-input" className="mt-5 block text-[12.5px] text-muted">
+                <label htmlFor="seal-input" className="mt-4 block text-[12.5px] text-muted sm:mt-5">
                   Write something
                 </label>
-                <div className="mt-2 flex items-center gap-2 rounded-2xl border border-hairline-strong bg-background px-4 py-3 focus-within:border-accent">
+                <div className="mt-2 flex items-center gap-2 rounded-2xl border border-hairline-strong bg-background px-3.5 py-2.5 focus-within:border-accent sm:px-4 sm:py-3">
                   <input
                     id="seal-input"
                     value={text}
@@ -180,7 +190,7 @@ export function SecurityChapter() {
                     onChange={(e) => setText(e.target.value)}
                     autoComplete="off"
                     spellCheck={false}
-                    className="min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-faint"
+                    className="min-w-0 flex-1 bg-transparent text-[16px] outline-none sm:text-[15px] placeholder:text-faint"
                     placeholder="Type a message"
                   />
                   <span className="shrink-0 font-mono text-[11.5px] text-faint">
@@ -188,11 +198,11 @@ export function SecurityChapter() {
                   </span>
                 </div>
 
-                <p className="mt-5 text-[12.5px] text-muted">What the relay would hold</p>
+                <p className="mt-4 text-[12.5px] text-muted sm:mt-5">What the relay would hold</p>
                 <Bytes bytes={shown} changed={changed} />
 
-                <div className="mt-5 flex flex-wrap gap-2">
-                  <button type="button" onClick={toggleChange} disabled={!sealed} className="btn btn-quiet group !px-4 !py-2 text-[13.5px] ring-1 ring-hairline-strong">
+                <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
+                  <button type="button" onClick={toggleChange} disabled={!sealed} className="btn btn-quiet group !px-3.5 !py-2 max-sm:!text-[13.5px] ring-1 ring-hairline-strong sm:!px-4">
                     {changed === null ? (
                       "Change one byte"
                     ) : (
@@ -202,7 +212,7 @@ export function SecurityChapter() {
                       </>
                     )}
                   </button>
-                  <button type="button" onClick={open} disabled={!sealed} className="btn btn-ink !px-4 !py-2 text-[13.5px]">
+                  <button type="button" onClick={open} disabled={!sealed} className="btn btn-ink !px-3.5 !py-2 max-sm:!text-[13.5px] sm:!px-4">
                     Open it on Ana’s phone
                   </button>
                 </div>
@@ -223,11 +233,11 @@ export function SecurityChapter() {
 function Bytes({ bytes, changed }: { bytes: Uint8Array | null; changed: number | null }) {
   const tagFrom = bytes ? bytes.length - TAG_BYTES : 0;
   return (
-    <div className="mt-2 rounded-2xl bg-surface-sunken p-3.5">
+    <div className="mt-2 rounded-2xl bg-surface-sunken p-3 sm:p-3.5">
       <p className="sr-only">
         {bytes ? `${bytes.length} bytes: ${tagFrom} of sealed message and a ${TAG_BYTES}-byte tag.` : "Sealing…"}
       </p>
-      <p aria-hidden className="flex min-h-[3.2em] flex-wrap gap-x-[0.45em] gap-y-1 font-mono text-[12.5px] leading-snug">
+      <p aria-hidden className="flex min-h-[3.2em] flex-wrap gap-x-[0.45em] gap-y-1 font-mono text-[11.5px] leading-snug sm:text-[12.5px]">
         {bytes
           ? Array.from(bytes, (byte, i) => (
               <span
@@ -269,7 +279,7 @@ function Outcome({ result, opened }: { result: Result; opened: string }) {
   } as const;
 
   return (
-    <div aria-live="polite" className="relative mt-4 min-h-[76px]">
+    <div aria-live="polite" className="relative mt-3 min-h-[64px] sm:mt-4 sm:min-h-[76px]">
       <AnimatePresence mode="popLayout" initial={false}>
         {result === "sealed" && (
           <motion.p key="sealed" {...motionProps} className="pt-1 text-[13.5px] leading-snug text-muted">

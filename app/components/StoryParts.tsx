@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, type Transition } from "motion/react";
+import { motion, type Transition } from "motion/react";
 import type { Icon } from "@phosphor-icons/react";
 
 /* ==========================================================================
@@ -26,8 +26,27 @@ export function useIsDesktop() {
   );
 }
 
+const REDUCED = "(prefers-reduced-motion: reduce)";
+
+/** The visitor's Reduce Motion setting. The server and the hydrating render
+    both say "motion on"; the real setting takes over right after. motion's own
+    useReducedMotion returns null on the server but the real value on the
+    client's first render, so with Reduce Motion on the two renders disagreed
+    and React reported a hydration mismatch. */
+export function usePrefersReducedMotion() {
+  return useSyncExternalStore(
+    (onChange) => {
+      const query = window.matchMedia(REDUCED);
+      query.addEventListener("change", onChange);
+      return () => query.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(REDUCED).matches,
+    () => false,
+  );
+}
+
 export function useStoryMotion() {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const ease: Transition = reduce ? { duration: 0 } : { duration: 0.55, ease: [0.16, 1, 0.3, 1] };
   const spring: Transition = reduce
     ? { duration: 0 }

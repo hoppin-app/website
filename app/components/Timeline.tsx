@@ -5,10 +5,10 @@ import {
   motion,
   useMotionValue,
   useMotionValueEvent,
-  useReducedMotion,
   useScroll,
   useSpring,
 } from "motion/react";
+import { usePrefersReducedMotion } from "./StoryParts";
 
 export type Chapter = { id: string; label: string };
 
@@ -24,7 +24,7 @@ export type Chapter = { id: string; label: string };
  */
 export default function Timeline({ chapters }: { chapters: Chapter[] }) {
   const [active, setActive] = useState(0);
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const fill = useMotionValue(0);
   const smoothFill = useSpring(fill, { stiffness: 260, damping: 40, mass: 0.6 });
   const { scrollY } = useScroll();

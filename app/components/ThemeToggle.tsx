@@ -1,8 +1,9 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { MoonIcon, SunIcon } from "@phosphor-icons/react";
+import { usePrefersReducedMotion } from "./StoryParts";
 
 /* The page is light unless you ask for dark. The choice is set on <html> by
    the inline script in layout.tsx before the first paint, so there is no
@@ -35,7 +36,7 @@ export default function ThemeToggle({
   look?: keyof typeof LOOKS;
 }) {
   const theme = useSyncExternalStore(subscribe, readTheme, (): Theme => "light");
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const next: Theme = theme === "dark" ? "light" : "dark";
 
   const toggle = () => {

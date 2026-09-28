@@ -68,6 +68,26 @@ export default function Scene({
     });
   };
 
+  // Beside the copy on desktop; under the visual on phones. Only one of the
+  // two is ever displayed, so only one is in the tab order.
+  const stageBar = (className: string) => (
+    <ol aria-label={`${eyebrow}: stages`} className={`gap-1.5 ${className}`}>
+      {stages.map((stage, i) => (
+        <li key={stage.title}>
+          <button
+            type="button"
+            onClick={() => goTo(i)}
+            aria-label={`${i + 1} of ${count}: ${stage.title}`}
+            aria-current={i === active ? "step" : undefined}
+            className="group block cursor-pointer py-3"
+          >
+            <Segment progress={scrollYProgress} index={i} count={count} />
+          </button>
+        </li>
+      ))}
+    </ol>
+  );
+
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="relative">
       <div
@@ -77,9 +97,9 @@ export default function Scene({
         style={{ height: `calc(100dvh + ${(count - 1) * STAGE_VH}vh)` }}
       >
         <div className="sticky top-0 flex h-[100dvh] flex-col overflow-hidden">
-          <div className="mx-auto grid min-h-0 w-full max-w-6xl flex-1 grid-rows-[minmax(0,1fr)_auto] items-center gap-6 px-5 pb-10 pt-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:grid-rows-1 lg:gap-12 lg:py-16">
-            {/* ---------------- Copy ---------------- */}
-            <div className="order-2 text-center lg:order-1 lg:text-left">
+          <div className="mx-auto grid min-h-0 w-full max-w-6xl flex-1 grid-rows-[auto_minmax(0,1fr)_auto] items-center gap-6 px-5 pb-10 pt-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:grid-rows-1 lg:gap-12 lg:py-16">
+            {/* ---------------- Copy: first on phones too, so the title leads ---------------- */}
+            <div className="text-center lg:text-left">
               <h2 id={`${id}-title`} className="t-eyebrow">
                 {eyebrow}
               </h2>
@@ -107,30 +127,19 @@ export default function Scene({
                 })}
               </div>
 
-              <ol aria-label={`${eyebrow}: stages`} className="mt-6 flex justify-center gap-1.5 sm:mt-8 lg:justify-start">
-                {stages.map((stage, i) => (
-                  <li key={stage.title}>
-                    <button
-                      type="button"
-                      onClick={() => goTo(i)}
-                      aria-label={`${i + 1} of ${count}: ${stage.title}`}
-                      aria-current={i === active ? "step" : undefined}
-                      className="group block cursor-pointer py-3"
-                    >
-                      <Segment progress={scrollYProgress} index={i} count={count} />
-                    </button>
-                  </li>
-                ))}
-              </ol>
+              {stageBar("mt-8 hidden justify-start lg:flex")}
             </div>
 
             {/* ---------------- Visual ---------------- */}
             <motion.div
               style={reduce ? undefined : { y: drift }}
-              className="relative order-1 flex h-full min-h-0 items-center justify-center lg:order-2"
+              className="relative flex h-full min-h-0 items-center justify-center"
             >
               {visual(active)}
             </motion.div>
+
+            {/* Phones: the progress sits under the visual, closing the frame. */}
+            {stageBar("flex justify-center lg:hidden")}
           </div>
         </div>
       </div>

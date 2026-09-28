@@ -5,7 +5,6 @@ import Image from "next/image";
 import {
   motion,
   useMotionValueEvent,
-  useReducedMotion,
   useScroll,
   useTransform,
   type Transition,
@@ -23,7 +22,7 @@ import {
   type Icon,
 } from "@phosphor-icons/react";
 import AppStoreLink from "./AppStoreLink";
-import { Chip, StatusCard, useIsDesktop } from "./StoryParts";
+import { Chip, StatusCard, useIsDesktop, usePrefersReducedMotion } from "./StoryParts";
 
 /* ==========================================================================
    The journey of one message
@@ -129,7 +128,7 @@ const SCREEN_ALT: Record<string, string> = {
 export default function Journey() {
   const track = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const isDesktop = useIsDesktop();
 
   // Which stages the pinned scene scrolls through on this screen.
