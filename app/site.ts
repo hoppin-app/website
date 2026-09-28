@@ -11,7 +11,8 @@ export const OPERATOR_COUNTRY = "Portugal";
 /**
  * Where people write for support, privacy requests and abuse. Leave empty
  * until the mailbox exists: the pages then show a visible placeholder instead
- * of a link that bounces.
+ * of a link that bounces. Cloudflare Email Routing forwards this address to
+ * Rodrigo's inbox.
  */
 export const CONTACT_EMAIL = "support@hoppin.chat";
 

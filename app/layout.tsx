@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hoppin.app"),
+  metadataBase: new URL("https://hoppin.chat"),
   title: "hoppin · Encrypted messages that find a way",
   description:
     "hoppin is an end-to-end encrypted messenger for iPhone. Messages go straight across your Wi-Fi, directly across the internet, over Bluetooth when there's no signal, or through a relay that only ever holds them sealed.",
