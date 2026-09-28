@@ -60,7 +60,7 @@ export default function Nav() {
 
           <div className="flex items-center gap-1.5">
             <ThemeToggle look="plain" />
-            <AppStoreLink className="btn btn-ink shrink-0 !gap-1.5 !px-4 !py-2 text-[13.5px]">
+            <AppStoreLink className="btn btn-ink nav-cta shrink-0">
               <AppleLogoIcon weight="fill" className="h-4 w-4" />
               Get the app
             </AppStoreLink>
