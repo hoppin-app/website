@@ -27,7 +27,7 @@ export default function PrivacyPage() {
       <h2>Who is responsible</h2>
       <p>
         hoppin (&ldquo;the app&rdquo;) is made by <strong>{OPERATOR}</strong>, an
-        individual developer based in {OPERATOR_COUNTRY} (&ldquo;we&rdquo;,
+        individual developer based in {OPERATOR_COUNTRY}{" "}(&ldquo;we&rdquo;,
         &ldquo;us&rdquo;). Under the EU General Data Protection Regulation
         (GDPR), we are the controller of the personal data described below.
         Write to <ContactEmail />{" "}about anything on this page.
@@ -96,8 +96,7 @@ export default function PrivacyPage() {
       </p>
       <p>
         We also see when a message is deposited or collected, how large it is
-        and which number it is for, but never what it says. We record the time
-        your app last connected to the server.
+        and which number it is for, but never what it says.
       </p>
       <p>
         <strong>Legal basis:</strong>{" "}our legitimate interest in running a

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HopMark } from "./HopMark";
-import { GithubIcon } from "./icons";
+import { GithubLogoIcon } from "@phosphor-icons/react/ssr";
 
 export const REPO_URL = "https://github.com/rloucao/hoppin-Swift";
 
@@ -45,7 +45,7 @@ export default function SiteFooter() {
             aria-label="hoppin on GitHub"
             className="cursor-pointer text-muted transition-colors duration-200 hover:text-foreground"
           >
-            <GithubIcon className="h-[18px] w-[18px]" />
+            <GithubLogoIcon className="h-[18px] w-[18px]" />
           </a>
         </div>
 

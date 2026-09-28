@@ -3,287 +3,252 @@
 /* ==========================================================================
    Design tokens
 
-   The palette is the app's, not a web approximation of it: the five aurora
-   colours from `BackgroundTheme.aurora` drift behind everything, and surfaces
-   are frosted glass over them, the same trick `glassListRows()` plays in the
-   app. Dark is the primary theme here because the lava backdrop is a dark
-   backdrop; the light theme is a legible fallback for anyone who asks for it.
+   A quiet page with the colour kept inside the product. The app's aurora is
+   the brand, but painted behind every section it read as generic AI gradient;
+   here it only appears where the app itself shows it, in the screenshots and
+   the icon. The page around them is a cool near-white (near-black in dark
+   mode), ink-coloured buttons, and one violet accent taken from the icon.
+
+   Light is the base. The theme switch sets `data-theme` on <html> before the
+   first paint (layout.tsx) and dark is opt-in; the media query below only
+   applies when JavaScript never ran.
    ========================================================================== */
 
 :root {
-  color-scheme: dark;
-
-  /* The base the blobs sit on. Matches LavaBackground.swift's dark base. */
-  --background: #0a0817;
-
-  /* Surfaces are translucent, so they pick up whatever colour drifts behind. */
-  --surface: rgba(255, 255, 255, 0.055);
-  --surface-raised: rgba(255, 255, 255, 0.085);
-  --glass-blur: 22px;
-
-  --foreground: #f6f5fb;
-  --muted: rgba(246, 245, 251, 0.74);
-  --border: rgba(255, 255, 255, 0.11);
-  --border-strong: rgba(255, 255, 255, 0.18);
-
-  /* --accent carries text and icons; --brand carries white text on a fill. */
-  --accent: #c3b0ff;
-  --brand: #6d3fe0;
-  --brand-hover: #7d52ea;
-  --glow: #5c29d9;
-
-  /* The aurora five, available to any component that wants one. */
-  --lava-violet: #5c29d9;
-  --lava-pink: #e6338c;
-  --lava-amber: #fa7324;
-  --lava-blue: #1473f2;
-  --lava-teal: #1abfb3;
-
-  --ios-blue: #0a84ff;
-  --ios-green: #30d158;
-  --ios-bubble: rgba(255, 255, 255, 0.13);
-  --nav-bg: rgba(10, 8, 23, 0.6);
-  --shadow-phone: 0 60px 120px -30px rgba(0, 0, 0, 0.75);
-}
-
-/* Opt-in light theme: the same colours washed out to pastels, exactly as the
-   app lightens its palette in light mode. */
-:root[data-theme="light"] {
   color-scheme: light;
 
-  --background: #f6f5fb;
-  --surface: rgba(255, 255, 255, 0.55);
-  --surface-raised: rgba(255, 255, 255, 0.78);
+  --background: #f6f6f8;
+  --surface: #ffffff;
+  --surface-sunken: #eeeef2;
 
-  --foreground: #16121f;
-  --muted: rgba(22, 18, 31, 0.62);
-  --border: rgba(22, 18, 31, 0.1);
-  --border-strong: rgba(22, 18, 31, 0.16);
+  --foreground: #121216;
+  --muted: #5a5a66;
+  --faint: #8b8b97;
+  --border: rgba(18, 18, 22, 0.08);
+  --border-strong: rgba(18, 18, 22, 0.14);
 
-  --accent: #5b21c6;
-  --brand: #5b21c6;
-  --brand-hover: #6d31d8;
+  /* The one accent: the icon's violet, calmed down. Links, active states,
+     small marks. Never a background wash. */
+  --accent: #5a3fcf;
+  --accent-soft: rgba(90, 63, 207, 0.1);
 
-  --ios-bubble: rgba(22, 18, 31, 0.08);
-  --nav-bg: rgba(246, 245, 251, 0.6);
-  --shadow-phone: 0 50px 100px -20px rgba(22, 18, 31, 0.3);
+  /* Primary buttons are ink, not violet: that is what keeps the accent rare. */
+  --ink: #121216;
+  --on-ink: #ffffff;
+
+  /* Shadows carry a trace of the violet instead of plain black. */
+  --shadow-card: 0 1px 2px rgba(26, 20, 60, 0.05),
+    0 14px 34px -16px rgba(40, 28, 110, 0.22);
+  --shadow-phone: 0 50px 90px -34px rgba(34, 24, 90, 0.42),
+    0 18px 36px -24px rgba(18, 18, 22, 0.3);
+  --glow-opacity: 0.32;
+
+  --nav-bg: rgba(246, 246, 248, 0.72);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --background: #131318;
+    --surface: #1c1c23;
+    --surface-sunken: #17171d;
+
+    --foreground: #f2f2f5;
+    --muted: #a4a4b0;
+    --faint: #72727e;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.14);
+
+    --accent: #ab9cff;
+    --accent-soft: rgba(171, 156, 255, 0.12);
+
+    --ink: #f2f2f5;
+    --on-ink: #131318;
+
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4),
+      0 18px 40px -18px rgba(0, 0, 0, 0.7);
+    --shadow-phone: 0 50px 100px -30px rgba(0, 0, 0, 0.8);
+    --glow-opacity: 0.42;
+
+    --nav-bg: rgba(19, 19, 24, 0.72);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #131318;
+  --surface: #1c1c23;
+  --surface-sunken: #17171d;
+
+  --foreground: #f2f2f5;
+  --muted: #a4a4b0;
+  --faint: #72727e;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  --accent: #ab9cff;
+  --accent-soft: rgba(171, 156, 255, 0.12);
+
+  --ink: #f2f2f5;
+  --on-ink: #131318;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4),
+    0 18px 40px -18px rgba(0, 0, 0, 0.7);
+  --shadow-phone: 0 50px 100px -30px rgba(0, 0, 0, 0.8);
+  --glow-opacity: 0.42;
+
+  --nav-bg: rgba(19, 19, 24, 0.72);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
-  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
+  --color-faint: var(--faint);
   --color-hairline: var(--border);
-  --color-accent: var(--accent);
-  --color-brand: var(--brand);
-  --color-ios-blue: var(--ios-blue);
-  --color-ios-green: var(--ios-green);
-  --color-ios-bubble: var(--ios-bubble);
-  --color-surface-raised: var(--surface-raised);
   --color-hairline-strong: var(--border-strong);
-  --color-lava-violet: var(--lava-violet);
-  --color-lava-pink: var(--lava-pink);
-  --color-lava-amber: var(--lava-amber);
-  --color-lava-blue: var(--lava-blue);
-  --color-lava-teal: var(--lava-teal);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-ink: var(--ink);
+  --color-on-ink: var(--on-ink);
 
-  --font-sans: var(--font-display);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* One easing for everything that moves: fast out, long settle. */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ==========================================================================
    Base
    ========================================================================== */
 
-/* Apple devices render this in real SF Pro; everyone else falls back to Inter. */
-:root {
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-    "SF Pro Text", var(--font-inter), "Helvetica Neue", Helvetica, Arial,
-    sans-serif;
-}
-
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-display);
-  font-synthesis-weight: none;
+  font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  background: var(--accent-soft);
 }
 
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 /* ==========================================================================
-   Lava backdrop
-   Five blobs on slow, mismatched Lissajous paths behind one big blur. The
-   periods are deliberately coprime-ish so the field never visibly repeats.
-   ========================================================================== */
-
-.lava {
-  position: fixed;
-  inset: 0;
-  z-index: -10;
-  overflow: hidden;
-  background: var(--background);
-  pointer-events: none;
-  /* One blur for the whole field: blurring each blob separately costs five
-     times as much and looks the same once they overlap. */
-  filter: blur(72px) saturate(125%);
-}
-
-.lava-blob {
-  position: absolute;
-  width: var(--blob-size);
-  height: calc(var(--blob-size) * 1.1);
-  margin-left: calc(var(--blob-size) / -2);
-  margin-top: calc(var(--blob-size) * -0.55);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 50%,
-    var(--blob-color) 0%,
-    color-mix(in srgb, var(--blob-color) 55%, transparent) 55%,
-    transparent 72%
-  );
-  opacity: 0.72;
-  will-change: transform;
-  animation: lava-drift-0 var(--blob-duration) ease-in-out infinite alternate;
-  animation-delay: var(--blob-delay);
-}
-
-/* Three paths rather than one, so neighbouring blobs separate and merge
-   instead of sliding in formation. */
-.lava-blob-1 { animation-name: lava-drift-1; }
-.lava-blob-2 { animation-name: lava-drift-2; }
-
-@keyframes lava-drift-0 {
-  from { transform: translate3d(-18%, -12%, 0) scale(1); }
-  to   { transform: translate3d(16%, 14%, 0) scale(1.14); }
-}
-
-@keyframes lava-drift-1 {
-  from { transform: translate3d(14%, -16%, 0) scale(1.1); }
-  to   { transform: translate3d(-15%, 12%, 0) scale(0.92); }
-}
-
-@keyframes lava-drift-2 {
-  from { transform: translate3d(-10%, 15%, 0) scale(0.95); }
-  to   { transform: translate3d(18%, -13%, 0) scale(1.18); }
-}
-
-/* A wash over the colour so text stays readable wherever a blob drifts. */
-.lava-scrim {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.36);
-}
-
-:root[data-theme="light"] .lava-blob { opacity: 0.4; }
-:root[data-theme="light"] .lava-scrim { background: rgba(255, 255, 255, 0.45); }
-
-/* Keep the colour, drop the movement. */
-@media (prefers-reduced-motion: reduce) {
-  .lava-blob { animation-play-state: paused; }
-}
-
-/* ==========================================================================
-   Frosted surfaces
-   The app puts `.ultraThinMaterial` behind list rows over the same backdrop;
-   `.glass` is that, for the web.
-   ========================================================================== */
-
-.glass {
-  background: var(--surface);
-  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  border: 1px solid var(--border);
-}
-
-.glass-raised {
-  background: var(--surface-raised);
-  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  border: 1px solid var(--border-strong);
-}
-
-/* Cards lift very slightly on hover. Transform only, so nothing reflows. */
-.glass-hover {
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 260ms ease, background-color 260ms ease;
-}
-
-.glass-hover:hover {
-  transform: translateY(-3px);
-  border-color: var(--border-strong);
-  background: var(--surface-raised);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .glass-hover:hover { transform: none; }
-}
-
-/* A hairline of colour along the top edge of a card, taken from the blob
-   palette, so the bento grid is not five identical grey rectangles. */
-.edge-top::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--edge-color, var(--lava-violet)),
-    transparent
-  );
-  opacity: 0.85;
-}
-
-/* ==========================================================================
-   Typography helpers
-   Apple headlines are semibold with tight tracking — never black/900.
+   Type scale
+   Semibold, tight, and never louder than it needs to be.
    ========================================================================== */
 
 .t-display {
-  font-size: clamp(2.75rem, 7.2vw, 5.5rem);
+  font-size: clamp(2.6rem, 1.4rem + 4.4vw, 5rem);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.042em;
+}
+
+.t-title {
+  font-size: clamp(2rem, 1.25rem + 2.6vw, 3.4rem);
   line-height: 1.05;
   font-weight: 600;
   letter-spacing: -0.035em;
 }
 
-.t-title {
-  font-size: clamp(2rem, 4.6vw, 3.5rem);
-  line-height: 1.08;
-  font-weight: 600;
-  letter-spacing: -0.028em;
-}
-
-.t-subtitle {
-  font-size: clamp(1.0625rem, 1.7vw, 1.5rem);
-  line-height: 1.45;
-  font-weight: 400;
+.t-lead {
+  font-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.3125rem);
+  line-height: 1.5;
   letter-spacing: -0.012em;
+  color: var(--muted);
 }
 
+/* Used at most once every three sections. */
 .t-eyebrow {
   font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.2s var(--ease-out-soft),
+    background-color 0.2s var(--ease-out-soft),
+    color 0.2s var(--ease-out-soft),
+    opacity 0.2s var(--ease-out-soft);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-ink {
+  background: var(--ink);
+  color: var(--on-ink);
+  padding: 0.8rem 1.5rem;
+}
+
+.btn-ink:hover {
+  opacity: 0.86;
+}
+
+.btn-quiet {
+  color: var(--foreground);
+  padding: 0.8rem 1.1rem;
+}
+
+.btn-quiet:hover {
+  color: var(--accent);
+}
+
+.btn[aria-disabled="true"] {
+  cursor: default;
+}
+
+/* ==========================================================================
+   Surfaces
+   A card is used only where lifting something off the page means something.
+   ========================================================================== */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
 }
 
 /* ==========================================================================
@@ -296,7 +261,7 @@ body {
   margin-top: 3.25rem;
   font-size: 1.375rem;
   font-weight: 600;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.024em;
 }
 
 .legal > h2:first-child {
@@ -307,18 +272,19 @@ body {
   margin-top: 2rem;
   font-size: 1.0625rem;
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.016em;
 }
 
 .legal p,
 .legal li {
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.7;
   color: var(--muted);
 }
 
 .legal p {
   margin-top: 1rem;
+  max-width: 68ch;
 }
 
 .legal ul,
@@ -333,18 +299,19 @@ body {
 .legal li {
   position: relative;
   padding-left: 1.15rem;
+  max-width: 68ch;
 }
 
 .legal li::before {
   content: "";
   position: absolute;
-  top: 0.68em;
+  top: 0.7em;
   left: 0;
   width: 5px;
   height: 5px;
   border-radius: 999px;
   background: var(--accent);
-  opacity: 0.55;
+  opacity: 0.6;
 }
 
 .legal strong {
@@ -374,7 +341,7 @@ body {
 .legal .legal-note {
   margin-top: 1.5rem;
   border: 1px solid var(--border);
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   padding: 1.25rem 1.5rem;
   background: var(--surface);
 }
@@ -384,569 +351,71 @@ body {
 }
 
 /* ==========================================================================
-   Scroll reveal — opt-in, transform/opacity only, reduced-motion safe
+   Scroll reveal: opt-in, transform/opacity only, reduced-motion safe
    ========================================================================== */
 
-/* Visible by default — Reveal.tsx opts elements in once JS is confirmed. */
+/* Visible by default. Reveal.tsx opts elements in once JS is confirmed. */
 .reveal {
   transition:
-    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.8s var(--ease-out-soft),
+    transform 0.8s var(--ease-out-soft);
 }
 
 .reveal[data-visible="false"] {
   opacity: 0;
-  transform: translate3d(0, 22px, 0);
+  transform: translate3d(0, 28px, 0);
   will-change: opacity, transform;
 }
 
-/* ==========================================================================
-   Scroll story — a pinned stage scrubbed by scroll position
-
-   ScrollStory.tsx writes --p and the derived 0→1 values below; every
-   transform here is calc()'d against them, so scrolling drives the frame
-   directly with no tweening library involved.
-   ========================================================================== */
-
-.story-spacer {
-  height: 420vh;
-}
-
-.story-stage {
-  position: sticky;
-  top: 3rem;
-  display: flex;
-  height: calc(100svh - 3rem);
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(1rem, 3vh, 2.5rem);
-  overflow: hidden;
-
-  /* Defaults for the pre-hydration frame and for no-JS visitors. */
-  --p: 0;
-  --sep: 1;
-  --draw: 1;
-  --sent: 1;
-  --packet: 1;
-  --landed: 1;
-  --server: 0;
-  --strike: 0;
-}
-
-/* --- devices ------------------------------------------------------------ */
-
-/* The stage box is a fixed 720×420 so the SVG path coordinates stay valid at
-   every breakpoint; only its scale changes. It is centred absolutely because
-   grid centring breaks once the box is wider than the viewport. */
-.story-devices-wrap {
-  --stage-scale: 0.44;
-  position: relative;
-  width: 100%;
-  height: calc(420px * var(--stage-scale));
-}
-
-@media (min-width: 480px) {
-  .story-devices-wrap { --stage-scale: 0.58; }
-}
-@media (min-width: 768px) {
-  .story-devices-wrap { --stage-scale: 0.8; }
-}
-@media (min-width: 1024px) {
-  .story-devices-wrap { --stage-scale: 1; }
-}
-
-.story-devices {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 720px;
-  height: 420px;
-  transform: translate(-50%, -50%) scale(var(--stage-scale));
-}
-
-.story-device {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  width: 190px;
-  height: 380px;
-  padding: 3px;
-  border-radius: 2rem;
-  background: linear-gradient(
-    160deg,
-    rgba(180, 180, 190, 0.9),
-    rgba(90, 90, 100, 0.85) 42%,
-    rgba(160, 160, 172, 0.9)
-  );
-  box-shadow: var(--shadow-phone);
-}
-
-.story-device--left {
-  transform: translateX(calc(-50% - var(--sep) * 230px));
-}
-
-.story-device--right {
-  opacity: var(--sep);
-  transform: translateX(calc(-50% + var(--sep) * 230px));
-}
-
-.story-device__screen {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  overflow: hidden;
-  border-radius: 1.85rem;
-  background: var(--background);
-}
-
-.story-device__bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border-bottom: 1px solid var(--border);
-  padding: 12px 14px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.story-device__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--ios-green);
-}
-
-.story-device__body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 12px;
-}
-
-.story-device__number {
-  align-self: center;
-  margin-bottom: auto;
-  padding-top: 26px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--muted);
-  /* Fades out as the second device arrives. */
-  opacity: calc(1 - var(--sep));
-}
-
-.story-device__composer {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-top: 1px solid var(--border);
-  padding: 10px 12px;
-}
-
-.story-device__composer span {
-  height: 22px;
-  flex: 1;
-  border-radius: 999px;
-  background: var(--surface);
-}
-
-.story-device__composer i {
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  background: var(--ios-blue);
-}
-
-.story-bubble {
-  max-width: 85%;
-  border-radius: 14px;
-  padding: 7px 10px;
-  font-size: 11.5px;
-  line-height: 1.35;
-}
-
-/* Typed just before it is sent. */
-.story-bubble--me {
-  align-self: flex-end;
-  background: var(--ios-blue);
-  color: #fff;
-  opacity: var(--sent);
-  transform: translateY(calc((1 - var(--sent)) * 8px));
-}
-
-.story-bubble--them {
-  align-self: flex-start;
-  background: var(--ios-bubble);
-  color: var(--foreground);
-}
-
-/* The received message only exists once the packet has arrived. */
-.story-bubble--lands {
-  opacity: var(--landed);
-  transform: translateY(calc((1 - var(--landed)) * 8px));
-}
-
-/* --- connection --------------------------------------------------------- */
-
-.story-arc {
-  position: absolute;
-  inset: 0;
-  width: 720px;
-  height: 420px;
-}
-
-.story-arc__path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: calc(1 - var(--draw));
-}
-
-.story-arc__label {
-  opacity: var(--draw);
-}
-
-.story-packet {
-  offset-path: path("M 232 196 Q 360 120 488 196");
-  offset-distance: calc(var(--packet) * 100%);
-  /* Visible only while in flight — ramps up fast, opacity clamps at 1. */
-  opacity: calc(var(--packet) * 5 * (1 - var(--landed)));
-}
-
-/* --- the relay that holds it sealed -------------------------------------- */
-
-.story-server {
-  position: absolute;
-  top: 232px;
-  left: 50%;
-  width: 190px;
-  transform: translateX(-50%);
-  text-align: center;
-  opacity: var(--server);
-}
-
-.story-server__box {
-  display: flex;
-  height: 54px;
-  flex-direction: column;
-  justify-content: center;
-  gap: 7px;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface-raised);
-  padding: 0 16px;
-}
-
-.story-server__box span {
-  height: 1.5px;
-  border-radius: 2px;
-  background: var(--muted);
-  opacity: 0.5;
-}
-
-.story-server__label {
-  margin-top: 10px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--muted);
-}
-
-/* The padlock that settles onto the relay: it can carry the envelope, but
-   the seal is the point — it never gets a key. */
-.story-server__seal {
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 999px;
-  border: 1.5px solid var(--border);
-  background: var(--background);
-  color: var(--accent);
-  opacity: var(--strike);
-  transform: translateX(-50%) scale(calc(0.8 + var(--strike) * 0.2));
-}
-
-/* --- captions ----------------------------------------------------------- */
-
-.story-captions {
-  position: relative;
-  display: grid;
-  width: 100%;
-  max-width: 34rem;
-  min-height: 8.5rem;
-  padding: 0 1.25rem;
-  text-align: center;
-}
-
-.story-caption {
-  grid-area: 1 / 1;
-  opacity: 0;
-  transform: translateY(10px);
-  transition:
-    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-}
-
-.story-stage[data-step="0"] .story-caption[data-index="0"],
-.story-stage[data-step="1"] .story-caption[data-index="1"],
-.story-stage[data-step="2"] .story-caption[data-index="2"],
-.story-stage[data-step="3"] .story-caption[data-index="3"] {
-  opacity: 1;
-  transform: none;
-}
-
-/* --- progress rail ------------------------------------------------------ */
-
-.story-rail {
-  display: flex;
-  gap: 7px;
-}
-
-.story-rail li {
-  width: 26px;
-  height: 3px;
-  border-radius: 999px;
-  background: var(--border);
-  transition: background-color 0.35s ease;
-}
-
-.story-stage[data-step="0"] .story-rail li[data-index="0"],
-.story-stage[data-step="1"] .story-rail li[data-index="1"],
-.story-stage[data-step="2"] .story-rail li[data-index="2"],
-.story-stage[data-step="3"] .story-rail li[data-index="3"] {
-  background: var(--accent);
-}
-
-/* Without the scroll driver the stage would pin forever, so unpin it and
-   let the finished frame read as a normal static illustration. */
 @media (prefers-reduced-motion: reduce) {
-  .story-spacer {
-    height: auto;
-  }
-
-  .story-stage {
-    position: static;
-    height: auto;
-    padding: 2rem 0;
-  }
-
-  .story-caption {
-    transition: none;
-  }
-}
-
-/* ==========================================================================
-   Animations
-   ========================================================================== */
-
-@keyframes packet-direct {
-  0% { offset-distance: 0%; opacity: 0; }
-  8% { opacity: 1; }
-  92% { opacity: 1; }
-  100% { offset-distance: 100%; opacity: 0; }
-}
-
-@keyframes pulse-ring {
-  0% { transform: scale(0.85); opacity: 0.55; }
-  70% { transform: scale(1.9); opacity: 0; }
-  100% { transform: scale(1.9); opacity: 0; }
-}
-
-@keyframes bubble-in {
-  from { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.96); }
-  to { opacity: 1; transform: none; }
-}
-
-@keyframes typing-dot {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
-  30% { transform: translateY(-3px); opacity: 1; }
-}
-
-.animate-bubble {
-  opacity: 0;
-  animation: bubble-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.packet {
-  offset-path: var(--path);
-  animation: packet-direct var(--duration, 2.6s) linear infinite;
-  animation-delay: var(--delay, 0s);
-}
-
-.pulse-ring {
-  animation: pulse-ring 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-}
-
-.typing-dot {
-  animation: typing-dot 1.2s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   .reveal,
   .reveal[data-visible="false"] {
     opacity: 1;
     transform: none;
     transition: none;
   }
-
-  .animate-bubble,
-  .packet,
-  .pulse-ring,
-  .typing-dot {
-    animation: none;
-    opacity: 1;
-  }
 }
 
 /* ==========================================================================
-   Scroll-scrubbed video (ScrollVideo.tsx)
+   Device frame
+   A thin black bezel around a real screenshot. The screenshot carries its
+   own status bar and Dynamic Island, so nothing is drawn on top of it.
    ========================================================================== */
 
-.scrollvideo-spacer {
-  height: var(--scrollvideo-height, 300vh);
-  background: #05060a;
-}
-
-.scrollvideo-stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  overflow: hidden;
-}
-
-.scrollvideo-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* fit="contain": blurred, dimmed copy of the frame behind the framed video. */
-.scrollvideo-backdrop {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  filter: blur(28px) brightness(0.45) saturate(1.3);
-  transform: scale(1.15);
-}
-
-.scrollvideo-spacer[data-fit="contain"] .scrollvideo-canvas {
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55));
-}
-
-/* Wide screens: captions sit in the left column, beside the portrait frame. */
-@media (min-width: 900px) {
-  .scrollvideo-spacer[data-fit="contain"] .scrollvideo-captions {
-    inset: 0 auto 0 0;
-    width: min(46vw, 560px);
-    align-content: center;
-    padding: 0 0 0 clamp(32px, 6vw, 96px);
-  }
-
-  .scrollvideo-spacer[data-fit="contain"] .scrollvideo-caption {
-    margin: 0;
-    text-align: left;
-  }
-
-  .scrollvideo-spacer[data-fit="contain"] .scrollvideo-shade {
-    background: linear-gradient(to right, rgba(5, 6, 10, 0.55) 0%, rgba(5, 6, 10, 0) 40%);
-  }
-}
-
-/* Darkens the edges so captions stay legible on any frame. */
-.scrollvideo-shade {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(5, 6, 10, 0.7) 0%, rgba(5, 6, 10, 0) 45%),
-    radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.45) 100%);
-  pointer-events: none;
-}
-
-.scrollvideo-captions {
-  position: absolute;
-  inset: 0 0 auto 0;
-  display: grid;
-  padding: clamp(96px, 16vh, 160px) 24px 0;
-  pointer-events: none;
-}
-
-/* All captions share one grid cell and cross-fade in place. */
-.scrollvideo-caption {
-  grid-area: 1 / 1;
-  max-width: 640px;
-  margin: 0 auto;
-  text-align: center;
-  color: #f5f5f7;
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-.scrollvideo-caption h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-}
-
-.scrollvideo-caption p {
-  margin-top: 14px;
-  font-size: clamp(1rem, 1.8vw, 1.25rem);
-  line-height: 1.5;
-  color: rgba(245, 245, 247, 0.75);
-}
-
-.scrollvideo-progress {
-  position: absolute;
-  left: 24px;
-  right: 24px;
-  bottom: 24px;
-  height: 3px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.15);
-  overflow: hidden;
-}
-
-.scrollvideo-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #0a84ff, #bf5af2, #ff6482);
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-
-/* Reduced motion: a normal-height section with a still and stacked captions. */
-.scrollvideo-spacer[data-reduced="true"] {
-  height: auto;
-}
-
-.scrollvideo-spacer[data-reduced="true"] .scrollvideo-stage {
+.device {
   position: relative;
-  height: auto;
-  min-height: 100svh;
+  aspect-ratio: 644 / 1400;
+  padding: 2.4%;
+  border-radius: 15% / 7%;
+  background: #0c0c0f;
+  box-shadow:
+    var(--shadow-phone),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-.scrollvideo-spacer[data-reduced="true"] .scrollvideo-captions {
-  gap: 32px;
+.device-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 13% / 6%;
+  background: #0c0c0f;
 }
 
-.scrollvideo-spacer[data-reduced="true"] .scrollvideo-caption {
-  grid-area: auto;
-  transform: none !important;
+/* The screenshot's own colours, blurred into a halo behind the phone. It is
+   the only place the app's aurora touches the page, and it changes with the
+   screen. Lives inside a pinned element, never a scrolling one. */
+.device-glow {
+  position: absolute;
+  inset: 8% -18% 4%;
+  z-index: -1;
+  filter: blur(64px) saturate(1.25);
+  opacity: var(--glow-opacity);
+  pointer-events: none;
 }
 
-.scrollvideo-spacer[data-reduced="true"] .scrollvideo-progress {
-  display: none;
+@media (prefers-reduced-transparency: reduce) {
+  .device-glow {
+    display: none;
+  }
 }

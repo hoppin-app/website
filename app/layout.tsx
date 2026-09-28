@@ -1,12 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
-import LavaBackground from "./components/LavaBackground";
 
-/* Fallback for non-Apple platforms — Apple devices get real SF Pro
-   from the system stack declared in globals.css. */
-const inter = Inter({
-  variable: "--font-inter",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
   display: "swap",
 });
@@ -19,13 +17,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hoppin.app"),
-  title: "hoppin · End-to-end encrypted messaging for iPhone",
+  title: "hoppin · Encrypted messages that find a way",
   description:
-    "hoppin delivers end-to-end encrypted messages between iPhones, directly over your local network or through a relay that only ever holds sealed ciphertext. Messages, photos and contacts stay on your device.",
+    "hoppin is an end-to-end encrypted messenger for iPhone. Messages go straight across your Wi-Fi, directly across the internet, over Bluetooth when there's no signal, or through a relay that only ever holds them sealed.",
   openGraph: {
-    title: "hoppin · End-to-end encrypted messaging for iPhone",
+    title: "hoppin · Encrypted messages that find a way",
     description:
-      "End-to-end encrypted messaging for iPhone. Direct on your local network, relayed as sealed ciphertext everywhere else. Messages stay on your device.",
+      "End-to-end encrypted messaging for iPhone. Straight across your Wi-Fi, across the internet, or over Bluetooth with no signal at all.",
     url: "/",
     siteName: "hoppin",
     type: "website",
@@ -35,8 +33,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  // The browser chrome matches the base the lava blobs sit on.
-  themeColor: "#0a0817",
 };
 
 export default function RootLayout({
@@ -47,17 +43,23 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geist.variable} ${geistMono.variable} h-full antialiased`}
+      // The theme script below sets data-theme before React hydrates.
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
-        <LavaBackground />
+      <body className="flex min-h-full flex-col bg-background text-foreground">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-brand focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-on-ink"
         >
           Skip to content
         </a>
         {children}
+        {/* Light unless the visitor chose dark (ThemeToggle). Runs before the
+            first paint, so a dark visit never flashes light or the reverse. */}
+        <Script id="theme" strategy="beforeInteractive">
+          {`try{document.documentElement.dataset.theme=localStorage.getItem("hoppin-theme")==="dark"?"dark":"light"}catch(e){document.documentElement.dataset.theme="light"}`}
+        </Script>
       </body>
     </html>
   );
