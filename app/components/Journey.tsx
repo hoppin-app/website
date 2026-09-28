@@ -185,7 +185,7 @@ export default function Journey() {
           tabIndex={focusable ? 0 : -1}
         >
           How it travels
-          <ArrowDownIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
+          <ArrowDownIcon className="nudge-down h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5" />
         </button>
       </div>
     </>
