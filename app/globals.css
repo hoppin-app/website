@@ -139,9 +139,19 @@
    Base
    ========================================================================== */
 
+/* No page scrollbar. The page still scrolls by wheel, trackpad, touch and
+   keys, and on the home page the timeline down the right edge shows where
+   you are. `scrollbar-width` covers Firefox, Chrome and Safari 18.2+; the
+   pseudo-element covers older WebKit. The features carousel hides its own
+   the same way. */
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
