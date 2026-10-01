@@ -147,7 +147,11 @@ export default function PrivacyPage() {
         phone gives it to our server so we can ask Apple to wake it when a
         message arrives. The notification we send says only that something
         arrived. It contains no sender, no text and nothing about the message.
-        Your phone fills in the details itself after decrypting. Turning
+        Your phone fills in the details itself after decrypting. To know when
+        to send one, our server relies on a flag the sender&rsquo;s phone
+        adds: a message or a photo asks for a notification, while a receipt, a
+        profile update or a group change doesn&rsquo;t. So our server can tell
+        those apart, though it can&rsquo;t read any of them. Turning
         notifications off in hoppin deletes the token from our server.
       </p>
       <p>
