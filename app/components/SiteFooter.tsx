@@ -10,6 +10,7 @@ const legalLinks = [
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
   { href: "/support", label: "Support" },
+  { href: "/accessibility", label: "Accessibility" },
 ];
 
 const linkClass = "cursor-pointer text-on-ink/70 transition-colors duration-200 hover:text-on-ink";
