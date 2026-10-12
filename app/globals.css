@@ -514,7 +514,7 @@ body {
 /* Tailwind's lg, where the scene turns into two columns. */
 @media (min-width: 64rem) {
   .device-frame {
-    --device-h: min(72dvh, 680px);
+    --device-h: min(72svh, 680px);
   }
 }
 

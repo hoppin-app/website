@@ -25,6 +25,10 @@ const LIFE = 2.6; // seconds
 const SPACING = 11; // CSS px between blobs along the path
 const RADIUS = 21; // CSS px
 const SINK = 7; // CSS px per second
+/** A blob swells from nothing over this long instead of appearing whole. */
+const GROW = 0.26; // seconds
+/** Blobs that fill a gap are spread over at most this much of the past. */
+const SPREAD = 0.06; // seconds
 
 const COLORS = {
   light: { hot: [1.0, 0.45, 0.32], cool: [0.42, 0.3, 0.92], alpha: 0.15 },
@@ -123,6 +127,7 @@ export default function LavaTrail() {
     const heatData = new Float32Array(MAX_BLOBS);
     let blobs: Blob[] = [];
     let last: { x: number; y: number } | null = null;
+    let lastTime = 0;
     let frame = 0;
     let height = 0;
 
@@ -140,11 +145,14 @@ export default function LavaTrail() {
 
       const theme = document.documentElement.dataset.theme === "dark" ? COLORS.dark : COLORS.light;
       blobs.forEach((b, i) => {
-        const age = (t - b.born) / LIFE;
+        const seconds = Math.max(0, t - b.born);
+        const age = seconds / LIFE;
         const heat = 1 - age;
+        // Ease out of nothing, so new blobs well up rather than pop in.
+        const grow = 1 - Math.pow(1 - Math.min(1, seconds / GROW), 3);
         blobData[i * 3] = b.x * SCALE;
-        blobData[i * 3 + 1] = (height - (b.y + SINK * (t - b.born))) * SCALE;
-        blobData[i * 3 + 2] = b.r * Math.pow(heat, 0.55) * SCALE;
+        blobData[i * 3 + 1] = (height - (b.y + SINK * seconds)) * SCALE;
+        blobData[i * 3 + 2] = b.r * grow * Math.pow(heat, 0.55) * SCALE;
         heatData[i] = heat * heat;
       });
 
@@ -168,10 +176,13 @@ export default function LavaTrail() {
       if (event.pointerType !== "mouse" && event.pointerType !== "pen") return;
       const x = event.clientX;
       const y = event.clientY;
-      const born = performance.now() / 1000;
+      const now = performance.now() / 1000;
       const from = last ?? { x, y };
       const distance = Math.hypot(x - from.x, y - from.y);
-      // Fill the gap a fast flick leaves, so the line stays unbroken.
+      // Fill the gap a fast flick leaves, so the line stays unbroken. The
+      // fillers are dated along the path, as if laid down as the cursor
+      // passed, so a long gap grows in from its start instead of all at once.
+      const since = last ? Math.max(lastTime, now - SPREAD) : now;
       const steps = last ? Math.floor(distance / SPACING) : 1;
       for (let i = 1; i <= steps; i++) {
         const f = last ? i / steps : 1;
@@ -179,10 +190,13 @@ export default function LavaTrail() {
           x: from.x + (x - from.x) * f,
           y: from.y + (y - from.y) * f,
           r: RADIUS * (0.85 + Math.random() * 0.3),
-          born,
+          born: since + (now - since) * f,
         });
       }
-      if (steps > 0 || !last) last = { x, y };
+      if (steps > 0 || !last) {
+        last = { x, y };
+        lastTime = now;
+      }
       if (blobs.length > MAX_BLOBS) blobs = blobs.slice(blobs.length - MAX_BLOBS);
       if (!frame) frame = requestAnimationFrame(draw);
     };

@@ -150,8 +150,8 @@ export default function Journey() {
     if (next !== active) setActive(next);
   });
 
-  // The phone settles back a touch as the story starts, and drifts slowly
-  // while it plays, so the pinned frame never looks frozen.
+  // On desktop the phone settles back a touch as the story starts, and drifts
+  // slowly while it plays, so the pinned frame never looks frozen.
   const phoneScale = useTransform(scrollYProgress, [0, 1 / STAGES.length], [1, 0.95]);
   const phoneY = useTransform(scrollYProgress, [0, 1], [0, -18]);
   // The stage bar belongs to the pinned scene: gone before the scene scrolls
@@ -212,7 +212,7 @@ export default function Journey() {
       <div
         id="journey-track"
         ref={track}
-        className="relative h-[calc(100dvh+135vh)] lg:h-[calc(100dvh+180vh)]"
+        className="relative h-[calc(100svh+135vh)] lg:h-[calc(100svh+180vh)]"
       >
         {/* Where "How it travels" (/#routes) lands: the scroll position that
             opens the first road, not the hero. On desktop 0.3 of the travel
@@ -224,7 +224,9 @@ export default function Journey() {
           className="pointer-events-none absolute left-0 top-[17vh] h-px w-px lg:top-[54vh]"
         />
 
-        <div className="sticky top-0 flex h-[100dvh] flex-col overflow-hidden">
+        {/* svh, not dvh: dvh follows Safari's toolbar as it shrinks on scroll,
+            and the phone (sized from this box) resized with every frame. */}
+        <div className="sticky top-0 flex h-[100svh] flex-col overflow-hidden">
           <div className="mx-auto grid min-h-0 w-full max-w-6xl flex-1 grid-rows-[minmax(0,1fr)_auto] items-center gap-5 px-5 pb-24 pt-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:grid-rows-1 lg:gap-12 lg:pb-20 lg:pt-16">
             {/* ---------------- Copy: every stage stacked in one cell ------- */}
             <div className="order-2 grid text-center lg:order-1 lg:text-left">
@@ -259,8 +261,10 @@ export default function Journey() {
 
             {/* ---------------- Phone, halo and floating cards ------------- */}
             <div className="device-slot relative order-1 flex h-full min-h-0 items-center justify-center lg:order-2">
+              {/* Desktop only: on phones a scroll-linked scale reads as the
+                  phone shrinking and twitching under your thumb. */}
               <motion.div
-                style={reduce ? undefined : { scale: phoneScale, y: phoneY }}
+                style={reduce || !isDesktop ? undefined : { scale: phoneScale, y: phoneY }}
                 className="device-frame"
               >
                 {/* Halo: each screen blurred behind the phone, crossfaded. */}

@@ -10,7 +10,7 @@ import {
   type MotionValue,
 } from "motion/react";
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
-import { useStoryMotion } from "./StoryParts";
+import { useIsDesktop, useStoryMotion } from "./StoryParts";
 
 /* ==========================================================================
    A pinned chapter, built the way the Journey is: the scene holds still
@@ -45,6 +45,7 @@ export default function Scene({
   const track = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const { reduce, ease } = useStoryMotion();
+  const isDesktop = useIsDesktop();
   const count = stages.length;
 
   const { scrollYProgress } = useScroll({ target: track, offset: ["start start", "end end"] });
@@ -54,7 +55,8 @@ export default function Scene({
     if (next !== active) setActive(next);
   });
 
-  // A slow drift while the chapter plays, so the pinned frame never looks frozen.
+  // A slow drift while the chapter plays, so the pinned frame never looks
+  // frozen. Desktop only: on phones it read as the visual twitching on scroll.
   const drift = useTransform(scrollYProgress, [0, 1], [14, -14]);
 
   const goTo = (index: number) => {
@@ -94,9 +96,10 @@ export default function Scene({
         ref={track}
         data-scene-track
         className="relative"
-        style={{ height: `calc(100dvh + ${(count - 1) * STAGE_VH}vh)` }}
+        style={{ height: `calc(100svh + ${(count - 1) * STAGE_VH}vh)` }}
       >
-        <div className="sticky top-0 flex h-[100dvh] flex-col overflow-hidden">
+        {/* svh: a box that follows Safari's shrinking toolbar resizes every frame. */}
+        <div className="sticky top-0 flex h-[100svh] flex-col overflow-hidden">
           <div className="mx-auto grid min-h-0 w-full max-w-6xl flex-1 grid-rows-[auto_minmax(0,1fr)_auto] items-center gap-6 px-5 pb-10 pt-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:grid-rows-1 lg:gap-12 lg:py-16">
             {/* ---------------- Copy: first on phones too, so the title leads ---------------- */}
             <div className="text-center lg:text-left">
@@ -132,7 +135,7 @@ export default function Scene({
 
             {/* ---------------- Visual ---------------- */}
             <motion.div
-              style={reduce ? undefined : { y: drift }}
+              style={reduce || !isDesktop ? undefined : { y: drift }}
               className="relative flex h-full min-h-0 items-center justify-center"
             >
               {visual(active)}
