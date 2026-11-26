@@ -1,0 +1,16 @@
+version: 1
+
+# To run the complete pipeline on ft/* pushes, uncomment:
+# feature_branches:
+#   full: true
+
+node:
+  enable: true
+  node_version: "22"
+  test:
+    enable: false # no test script yet
+
+security:
+  codeql:
+    enable: true
+    languages: [javascript-typescript]

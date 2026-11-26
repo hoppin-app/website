@@ -1,0 +1,31 @@
+# Runs the shared pipeline from hoppin-app/lib.
+# What runs (lint, tests, security) is set in .github/pipeline.yml.
+name: ci
+
+on:
+  push:
+    # ft/* branches run the light version unless feature_branches.full is true.
+    branches: [main, development, "ft/**"]
+  # Pull requests into these branches always run the full version.
+  pull_request:
+    branches: [main, development]
+  workflow_dispatch:
+
+concurrency:
+  # A new push cancels the older run on the same branch.
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  security-events: write # lets CodeQL upload its results
+
+jobs:
+  pipeline:
+    # Version of the pipeline; "lib_ref" must be the same tag.
+    uses: hoppin-app/lib/.github/workflows/pipeline.yml@v1
+    with:
+      lib_ref: v1
+    # Only for a private lib repo: a token that can read it.
+    # secrets:
+    #   lib_token: ${{ secrets.LIB_READ_TOKEN }}
