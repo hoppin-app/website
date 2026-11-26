@@ -36,8 +36,10 @@ export default function Home() {
 
       {/* Opaque and above the footer, so the last chapter scrolls away and
           uncovers it. The clip keeps the fixed lava canvas inside main, so it
-          never paints over the footer as that comes into view. */}
-      <main id="main" className="relative z-10 flex-1 bg-background [clip-path:inset(0)]">
+          never paints over the footer as that comes into view. Its last stretch
+          fades out (`.fade-into-footer`), so it melts into the footer as it
+          slides away instead of ending on a hard line. */}
+      <main id="main" className="fade-into-footer relative z-10 flex-1 bg-background [clip-path:inset(0)]">
         <LavaTrail />
 
         <div id="journey">

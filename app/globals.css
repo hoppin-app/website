@@ -667,3 +667,123 @@ body {
     z-index: 0;
   }
 }
+
+/* The page's bottom edge, which slides off the footer on the home page:
+   faded over the empty space below the last chapter, so the footer shows
+   through gradually. Where the footer is not underneath (short screens),
+   the page colour sits behind and the fade is invisible. */
+.fade-into-footer {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 160px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 160px), transparent);
+}
+
+/* ==========================================================================
+   Footer: the app's lava backdrop (BackgroundThemeView, Aurora preset) seen
+   through liquid glass that spans the whole footer. Light mode lightens the
+   palette toward white over a pale violet base, as LavaBackground.swift
+   does; dark mode uses it as-is over near-black. The top fades in from the
+   page colour so there is no hard edge. Blobs are soft radial gradients (no
+   filter: blur, so it stays cheap) drifting on slow, out-of-step loops.
+   ========================================================================== */
+
+:root {
+  --lava-base: #f6f2fd;
+  --lava-1: #9d7fe8;
+  --lava-2: #f085ba;
+  --lava-3: #fcab7c;
+  --lava-4: #72abf7;
+  --lava-5: #76d9d1;
+  --lava-alpha: 0.6;
+  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.18));
+  --glass-sheen: rgba(255, 255, 255, 0.45);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --lava-base: #0a0817;
+    --lava-1: #5c29d9;
+    --lava-2: #e6338c;
+    --lava-3: #fa7324;
+    --lava-4: #1473f2;
+    --lava-5: #1abfb3;
+    --lava-alpha: 0.32;
+    --glass-bg: linear-gradient(180deg, rgba(24, 20, 40, 0.3), rgba(10, 8, 23, 0.45));
+    --glass-sheen: rgba(255, 255, 255, 0.06);
+  }
+}
+
+:root[data-theme="dark"] {
+  --lava-base: #0a0817;
+  --lava-1: #5c29d9;
+  --lava-2: #e6338c;
+  --lava-3: #fa7324;
+  --lava-4: #1473f2;
+  --lava-5: #1abfb3;
+  --lava-alpha: 0.32;
+  --glass-bg: linear-gradient(180deg, rgba(24, 20, 40, 0.3), rgba(10, 8, 23, 0.45));
+  --glass-sheen: rgba(255, 255, 255, 0.06);
+}
+
+.footer-lava {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--lava-base);
+  color: var(--foreground);
+}
+
+/* The page colour melts into the lava instead of stopping at a hard edge. */
+.footer-lava::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: min(60%, 260px);
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    var(--background) 0%,
+    color-mix(in srgb, var(--background) 70%, transparent) 35%,
+    color-mix(in srgb, var(--background) 25%, transparent) 70%,
+    transparent 100%
+  );
+}
+
+.lava-blob {
+  position: absolute;
+  z-index: -2;
+  border-radius: 50%;
+  opacity: var(--lava-alpha);
+  background: radial-gradient(closest-side, var(--c) 0%, var(--c) 35%, transparent 100%);
+  will-change: transform;
+  animation: var(--anim) ease-in-out infinite alternate;
+}
+
+.lava-blob:nth-child(1) { --c: var(--lava-1); width: 70vmax; height: 70vmax; left: -20%; top: -40%; --anim: lava-a 34s; }
+.lava-blob:nth-child(2) { --c: var(--lava-2); width: 55vmax; height: 55vmax; left: 45%; top: -30%; --anim: lava-b 27s; }
+.lava-blob:nth-child(3) { --c: var(--lava-3); width: 45vmax; height: 45vmax; left: 20%; top: 35%; --anim: lava-c 41s; }
+.lava-blob:nth-child(4) { --c: var(--lava-4); width: 60vmax; height: 60vmax; left: 60%; top: 20%; --anim: lava-d 30s; }
+.lava-blob:nth-child(5) { --c: var(--lava-5); width: 40vmax; height: 40vmax; left: -5%; top: 45%; --anim: lava-e 23s; }
+
+@keyframes lava-a { from { transform: translate(0, 0) scale(1); } to { transform: translate(25%, 18%) scale(1.12); } }
+@keyframes lava-b { from { transform: translate(0, 0) scale(1.05); } to { transform: translate(-30%, 22%) scale(0.92); } }
+@keyframes lava-c { from { transform: translate(0, 0) scale(0.95); } to { transform: translate(28%, -26%) scale(1.1); } }
+@keyframes lava-d { from { transform: translate(0, 0) scale(1); } to { transform: translate(-22%, -20%) scale(1.1); } }
+@keyframes lava-e { from { transform: translate(0, 0) scale(1.08); } to { transform: translate(30%, -15%) scale(0.94); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .lava-blob {
+    animation: none;
+  }
+}
+
+.footer-glass {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(36px) saturate(1.6);
+  backdrop-filter: blur(36px) saturate(1.6);
+  /* A faint sheen inside the glass; no rim, so the top edge stays soft. */
+  box-shadow: inset 0 40px 80px -40px var(--glass-sheen);
+}
