@@ -1,0 +1,12 @@
+version: 1
+
+node:
+  enable: true
+  node_version: "22"
+  test:
+    enable: false # no test script yet
+
+security:
+  codeql:
+    enable: true
+    languages: [javascript-typescript]
