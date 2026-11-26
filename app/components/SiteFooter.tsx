@@ -4,7 +4,7 @@ import { AppleLogoIcon, ArrowUpIcon, GithubLogoIcon } from "@phosphor-icons/reac
 import AppStoreLink from "./AppStoreLink";
 import { HopMark } from "./HopMark";
 
-export const REPO_URL = "https://github.com/rloucao/hoppin-Swift";
+export const REPO_URL = "https://github.com/hoppin-app/hoppin";
 
 const legalLinks = [
   { href: "/privacy", label: "Privacy" },
